@@ -348,7 +348,7 @@ then
     fi
   fi
   export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
-  make -j$NUMCPUS
+  make
 else
   echo " "
 fi
