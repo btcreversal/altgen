@@ -247,12 +247,12 @@ sed -i "s/0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9/$RE
 #Total number of transaction between genesis and last known timestamp
 sed -i "s/382986/0/" src/chainparams.cpp
 sed -i "s/1502955334/$TEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
-sed -i "s/0.01/$TEST_ESTIMATED_TRANSACTIONS/" src/chainparams.cpp
+sed -i "s/0\.01/$TEST_ESTIMATED_TRANSACTIONS/" src/chainparams.cpp
 #mainnet
 #Total number of transaction between genesis and last known timestamp
 sed -i "s/11428845/0/" src/chainparams.cpp
 sed -i "s/1502953751/$MAINNET_GENESIS_TIMESTAMP/" src/chainparams.cpp
-sed -i "s/0.06/$MAINNET_ESTIMATED_TRANSACTIONS/" src/chainparams.cpp
+sed -i "s/0\.06/$MAINNET_ESTIMATED_TRANSACTIONS/" src/chainparams.cpp
 
 #comment checkpoints
 #mainnet
