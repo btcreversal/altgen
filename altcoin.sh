@@ -1,9 +1,10 @@
 #!/bin/bash
 
-rm -rf mycoin
 
 # ******************************* Coin settings *******************************************
-COINNAME="mycoin"
+COIN_NAME="Mycoin"
+rm -rf $COIN_NAME
+COIN_UNIT="MYC"
 RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
 PHRASE="Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible"
 MAINNET_PORT="9133"
@@ -83,6 +84,9 @@ IF_BUILD="TRUE"
 IF_INSTALL="TURE"
 
 #*****************************************************************************************************
+COIN_NAME_LOWER=${COIN_NAME,,}
+COIN_NAME_UPPER=${COIN_NAME^^}
+
 
 installdb_debian() {
   wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/install_db4.sh
@@ -135,14 +139,44 @@ install_dependencies() {
 
 
 # download and unpack litecoin sources into new coin folder
-wget ${RELEASE_URL} -O ${COINNAME}.tar.gz
-mkdir ${COINNAME}
-tar -xf ${COINNAME}.tar.gz -C ./${COINNAME} --strip-components 1
-rm ${COINNAME}.tar.gz
+wget ${RELEASE_URL} -O ${COIN_NAME}.tar.gz
+mkdir ${COIN_NAME}
+tar -xf ${COIN_NAME}.tar.gz -C ./${COIN_NAME} --strip-components 1
+rm ${COIN_NAME}.tar.gz
 
 # copy yescryptR16 files into new coin source folder
-cp -r hash ${COINNAME}/src/
-cd ${COINNAME}
+cp -r hash ${COIN_NAME}/src/
+
+# pushd $COIN_NAME
+cd ${COIN_NAME}
+
+
+if [ -d $COIN_NAME_LOWER ]; then
+    echo "Warning: $COIN_NAME_LOWER already existing"
+    return 0
+fi
+# clone litecoin
+
+
+# first rename all directories
+for i in $(find . -type d | grep -v "^./.git" | grep litecoin); do
+    mv $i $(echo $i| sed "s/litecoin/$COIN_NAME_LOWER/")
+done
+
+# then rename all files
+for i in $(find . -type f | grep -v "^./.git" | grep litecoin); do
+    mv $i $(echo $i| sed "s/litecoin/$COIN_NAME_LOWER/")
+done
+
+# now replace all litecoin references to the new coin name
+for i in $(find . -type f | grep -v "^./.git"); do
+    sed -i "s/Litecoin/$COIN_NAME/g" $i
+    sed -i "s/litecoin/$COIN_NAME_LOWER/g" $i
+    sed -i "s/LITECOIN/$COIN_NAME_UPPER/g" $i
+    sed -i "s/LTC/$COIN_UNIT/g" $i
+done
+
+# popd
 
 # add yescryptR16 sources to autogen makefile
 sed -i -e 's#consensus/validation.h[[:space:]]\\#consensus/validation.h \\\n  hash/yescrypt/yescrypt.h \\\n  hash/yescrypt/yescrypt.c \\\n  hash/yescrypt/sha256.h \\\n  hash/yescrypt/sha256_c.h \\\n  hash/yescrypt/yescrypt-best_c.h \\\n  hash/yescrypt/sysendian.h \\\n  hash/yescrypt/yescrypt-platform_c.h \\\n  hash/yescrypt/yescrypt-opt_c.h \\\n  hash/yescrypt/yescrypt-simd_c.h \\#g' src/Makefile.am
