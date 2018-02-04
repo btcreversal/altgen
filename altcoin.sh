@@ -4,7 +4,7 @@ rm -rf mycoin
 
 # ******************************* Coin settings *******************************************
 COINNAME="mycoin"
-RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.15.0.1rc1.tar.gz"
+RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
 PHRASE="Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible"
 MAINNET_PORT="9133"
 TESTNET_PORT="19135"
@@ -54,12 +54,12 @@ REGTEST_MESSAGE_S_3="0xd8"
 
 # key string prefixes mainnet
 # there are certain rules firs must be the same through all nets, second must be the same within the net, last two must differ
-MAIN_PREFIX_PUBLIC="{0x09, 0x44, 0xA2, 0x2E}"
-MAIN_PREFIX_SECRET="{0x09, 0x44, 0xA1, 0xE2}"
+MAIN_PREFIX_PUBLIC="(0x09)(0x44)(0xA2)(0x2E)"
+MAIN_PREFIX_SECRET="(0x09)(0x44)(0xA1)(0xE2)"
 
 #key string prefixes testnet
-TEST_PREFIX_PUBLIC="{0x09, 0x33, 0x87, 0xCF}"
-TEST_PREFIX_SECRET="{0x09, 0x33, 0x83, 0x94}"
+TEST_PREFIX_PUBLIC="(0x09)(0x33)(0x87)(0xCF)"
+TEST_PREFIX_SECRET="(0x09)(0x33)(0x83)(0x94)"
 # **************************************************************************************************
 
 
@@ -164,7 +164,6 @@ cp ../chainparamsseeds.h src/
 sed -i -e 's+#include[[:space:]]"crypto/scrypt.h"+#include "crypto/scrypt.h"\n\nextern "C" void yescrypt_hash(const char *input, char *output);+g' src/primitives/block.cpp
 sed -i -e 's+scrypt_1024_1_1_256+yescrypt_hash+g' src/primitives/block.cpp
 
-CUSTOM_POW=`cat ../checkProofOfWork.cpp`
 
 sed -i -e 's+#include[[:space:]]"chainparamsseeds.h"+#include "chainparamsseeds.h"\n#include "arith_uint256.h"\n\nbool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params\& params);+g' src/chainparams.cpp
 echo 'bool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params& params)' >> src/chainparams.cpp
@@ -245,36 +244,36 @@ sed -i "s/0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9/$RE
 #ChainTxData
 #testnet
 #Total number of transaction between genesis and last known timestamp
-sed -i "s/382986/0/" src/chainparams.cpp
-sed -i "s/1502955334/$TEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
+sed -i "s/8731/0/" src/chainparams.cpp
+sed -i "s/1487715270/$TEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
 sed -i "s/0\.01/$TEST_ESTIMATED_TRANSACTIONS/" src/chainparams.cpp
 #mainnet
 #Total number of transaction between genesis and last known timestamp
-sed -i "s/11428845/0/" src/chainparams.cpp
-sed -i "s/1502953751/$MAINNET_GENESIS_TIMESTAMP/" src/chainparams.cpp
+sed -i "s/9243806/0/" src/chainparams.cpp
+sed -i "s/1487715936/$MAINNET_GENESIS_TIMESTAMP/" src/chainparams.cpp
 sed -i "s/0\.06/$MAINNET_ESTIMATED_TRANSACTIONS/" src/chainparams.cpp
 
 #comment checkpoints
 #mainnet
-sed -i "s|{  1500, uint256S|{  0, uint256S|g" src/chainparams.cpp
+sed -i "s|(  1500, uint256S|(  0, uint256S|g" src/chainparams.cpp
 sed -i "s|0x841a2965955dd288cfa707a755d05a54e45f8bd476835ec9af4402a2b59a2967|$MAIN_GENESIS_HASH|g" src/chainparams.cpp
-sed -i "s|{  4032, uint256S|//{  4032, uint256S|g" src/chainparams.cpp
-sed -i "s|{  8064, uint256S|//{  8064, uint256S|g" src/chainparams.cpp
-sed -i "s|{ 16128, uint256S|//{ 16128, uint256S|g" src/chainparams.cpp
-sed -i "s|{ 23420, uint256S|//{ 23420, uint256S|g" src/chainparams.cpp
-sed -i "s|{ 50000, uint256S|//{ 50000, uint256S|g" src/chainparams.cpp
-sed -i "s|{ 80000, uint256S|//{ 80000, uint256S|g" src/chainparams.cpp
-sed -i "s|{120000, uint256S|//{120000, uint256S|g" src/chainparams.cpp
-sed -i "s|{161500, uint256S|//{161500, uint256S|g" src/chainparams.cpp
-sed -i "s|{179620, uint256S|//{179620, uint256S|g" src/chainparams.cpp
-sed -i "s|{240000, uint256S|//{240000, uint256S|g" src/chainparams.cpp
-sed -i "s|{383640, uint256S|//{383640, uint256S|g" src/chainparams.cpp
-sed -i "s|{409004, uint256S|//{409004, uint256S|g" src/chainparams.cpp
-sed -i "s|{456000, uint256S|//{456000, uint256S|g" src/chainparams.cpp
-sed -i "s|{638902, uint256S|//{638902, uint256S|g" src/chainparams.cpp
-sed -i "s|{721000, uint256S|//{721000, uint256S|g" src/chainparams.cpp
+sed -i "s|(  4032, uint256S|//(  4032, uint256S|g" src/chainparams.cpp
+sed -i "s|(  8064, uint256S|//(  8064, uint256S|g" src/chainparams.cpp
+sed -i "s|( 16128, uint256S|//( 16128, uint256S|g" src/chainparams.cpp
+sed -i "s|( 23420, uint256S|//( 23420, uint256S|g" src/chainparams.cpp
+sed -i "s|( 50000, uint256S|//( 50000, uint256S|g" src/chainparams.cpp
+sed -i "s|( 80000, uint256S|//( 80000, uint256S|g" src/chainparams.cpp
+sed -i "s|(120000, uint256S|//(120000, uint256S|g" src/chainparams.cpp
+sed -i "s|(161500, uint256S|//(161500, uint256S|g" src/chainparams.cpp
+sed -i "s|(179620, uint256S|//(179620, uint256S|g" src/chainparams.cpp
+sed -i "s|(240000, uint256S|//(240000, uint256S|g" src/chainparams.cpp
+sed -i "s|(383640, uint256S|//(383640, uint256S|g" src/chainparams.cpp
+sed -i "s|(409004, uint256S|//(409004, uint256S|g" src/chainparams.cpp
+sed -i "s|(456000, uint256S|//(456000, uint256S|g" src/chainparams.cpp
+sed -i "s|(638902, uint256S|//(638902, uint256S|g" src/chainparams.cpp
+sed -i "s|(721000, uint256S|//(721000, uint256S|g" src/chainparams.cpp
 #testnet
-sed -i "s|{2056, uint256S|{0, uint256S|g" src/chainparams.cpp
+sed -i "s|(2056, uint256S|(0, uint256S|g" src/chainparams.cpp
 sed -i "s|17748a31ba97afdc9a4f86837a39d287e3e7c7290a08a1d816c5969c78a83289|$TEST_GENESIS_HASH|g" src/chainparams.cpp
 #regtest
 sed -i "s|530827f38f93b43ed12af0b3ad25a288dc02ed74d6d7857862df51fc56c416f9|$REGTEST_GENESIS_HASH|g" src/chainparams.cpp
@@ -289,8 +288,8 @@ sed -i "s|pchMessageStart\[0\] = 0xfb|pchMessageStart[0]  = $MAIN_MESSAGE_S_0|g"
 sed -i "s|pchMessageStart\[1\] = 0xc0|pchMessageStart[1]  = $MAIN_MESSAGE_S_1|g" src/chainparams.cpp
 sed -i "s|pchMessageStart\[2\] = 0xb6|pchMessageStart[2]  = $MAIN_MESSAGE_S_2|g" src/chainparams.cpp
 sed -i "s|pchMessageStart\[3\] = 0xdb|pchMessageStart[3]  = $MAIN_MESSAGE_S_3|g" src/chainparams.cpp
-sed -i "s|{0x04, 0x88, 0xB2, 0x1E}|$MAIN_PREFIX_PUBLIC|g" src/chainparams.cpp
-sed -i "s|{0x04, 0x88, 0xAD, 0xE4}|$MAIN_PREFIX_SECRET|g" src/chainparams.cpp
+sed -i "s|(0x04)(0x88)(0xB2)(0x1E)|$MAIN_PREFIX_PUBLIC|g" src/chainparams.cpp
+sed -i "s|(0x04)(0x88)(0xAD)(0xE4)|$MAIN_PREFIX_SECRET|g" src/chainparams.cpp
 
 #Testnet
 sed -i "s|pchMessageStart\[0\] = 0xfd|pchMessageStart[0]  = $TEST_MESSAGE_S_0|g" src/chainparams.cpp
@@ -298,8 +297,8 @@ sed -i "s|pchMessageStart\[1\] = 0xd2|pchMessageStart[1]  = $TEST_MESSAGE_S_1|g"
 sed -i "s|pchMessageStart\[2\] = 0xc8|pchMessageStart[2]  = $TEST_MESSAGE_S_2|g" src/chainparams.cpp
 sed -i "s|pchMessageStart\[3\] = 0xf1|pchMessageStart[3]  = $TEST_MESSAGE_S_3|g" src/chainparams.cpp
 #testnet and regtest are the same
-sed -i "s|{0x04, 0x35, 0x87, 0xCF}|$TEST_PREFIX_PUBLIC|g" src/chainparams.cpp
-sed -i "s|{0x04, 0x35, 0x83, 0x94}|$TEST_PREFIX_SECRET|g" src/chainparams.cpp
+sed -i "s|(0x04)(0x35)(0x87)(0xCF)|$TEST_PREFIX_PUBLIC|g" src/chainparams.cpp
+sed -i "s|(0x04)(0x35)(0x83)(0x94)|$TEST_PREFIX_SECRET|g" src/chainparams.cpp
 
 #Regtest
 sed -i "s|pchMessageStart\[0\] = 0xfa|pchMessageStart[0]  = $REGTEST_MESSAGE_S_0|g" src/chainparams.cpp
