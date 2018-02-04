@@ -335,9 +335,9 @@ then
   then
     if [ $GUI == "TRUE" ]
     then
-      ./configure --enable-upnp-default --disable-tests LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
+      ./configure --disable-tests LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
     else
-      ./configure --enable-upnp-default --without-gui --disable-tests LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
+      ./configure --without-gui --disable-tests LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
     fi
   else
     if [ $GUI == "TRUE" ]
@@ -347,7 +347,8 @@ then
       ./configure --disable-tests --without-gui
     fi
   fi
-  make -j 6
+  export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
+  make -j$NUMCPUS
 else
   echo " "
 fi
