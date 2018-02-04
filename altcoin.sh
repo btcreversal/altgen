@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf mycoin
+
 # ******************************* Coin settings *******************************************
 COINNAME="mycoin"
 RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.15.0.1rc1.tar.gz"
@@ -78,7 +80,7 @@ GUI="FALSE"
 #whether
 IF_BUILD="TRUE"
 #whether instal core client
-IF_INSTALL="TRUE"
+IF_INSTALL="TURE"
 
 #*****************************************************************************************************
 
@@ -283,27 +285,27 @@ sed -i "s|530827f38f93b43ed12af0b3ad25a288dc02ed74d6d7857862df51fc56c416f9|$REGT
 
 
 #mainnet
-sed -i "s|pchMessageStart[0] = 0xfb|pchMessageStart[0] = $MAIN_MESSAGE_S_0|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[1] = 0xc0|pchMessageStart[1] = $MAIN_MESSAGE_S_1|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[2] = 0xb6|pchMessageStart[2] = $MAIN_MESSAGE_S_2|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[3] = 0xdb|pchMessageStart[3] = $MAIN_MESSAGE_S_3|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[0\] = 0xfb|pchMessageStart[0]  = $MAIN_MESSAGE_S_0|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[1\] = 0xc0|pchMessageStart[1]  = $MAIN_MESSAGE_S_1|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[2\] = 0xb6|pchMessageStart[2]  = $MAIN_MESSAGE_S_2|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[3\] = 0xdb|pchMessageStart[3]  = $MAIN_MESSAGE_S_3|g" src/chainparams.cpp
 sed -i "s|{0x04, 0x88, 0xB2, 0x1E}|$MAIN_PREFIX_PUBLIC|g" src/chainparams.cpp
 sed -i "s|{0x04, 0x88, 0xAD, 0xE4}|$MAIN_PREFIX_SECRET|g" src/chainparams.cpp
 
 #Testnet
-sed -i "s|pchMessageStart[0] = 0xfd|pchMessageStart[0] = $TEST_MESSAGE_S_0|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[1] = 0xd2|pchMessageStart[1] = $TEST_MESSAGE_S_1|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[2] = 0xc8|pchMessageStart[2] = $TEST_MESSAGE_S_2|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[3] = 0xf1|pchMessageStart[3] = $TEST_MESSAGE_S_3|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[0\] = 0xfd|pchMessageStart[0]  = $TEST_MESSAGE_S_0|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[1\] = 0xd2|pchMessageStart[1]  = $TEST_MESSAGE_S_1|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[2\] = 0xc8|pchMessageStart[2]  = $TEST_MESSAGE_S_2|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[3\] = 0xf1|pchMessageStart[3]  = $TEST_MESSAGE_S_3|g" src/chainparams.cpp
 #testnet and regtest are the same
 sed -i "s|{0x04, 0x35, 0x87, 0xCF}|$TEST_PREFIX_PUBLIC|g" src/chainparams.cpp
 sed -i "s|{0x04, 0x35, 0x83, 0x94}|$TEST_PREFIX_SECRET|g" src/chainparams.cpp
 
 #Regtest
-sed -i "s|pchMessageStart[0] = 0xfa|pchMessageStart[0] = $MAIN_MESSAGE_S_0|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[1] = 0xbf|pchMessageStart[1] = $MAIN_MESSAGE_S_1|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[2] = 0xb5|pchMessageStart[2] = $MAIN_MESSAGE_S_2|g" src/chainparams.cpp
-sed -i "s|pchMessageStart[3] = 0xda|pchMessageStart[3] = $MAIN_MESSAGE_S_3|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[0\] = 0xfa|pchMessageStart[0]  = $REGTEST_MESSAGE_S_0|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[1\] = 0xbf|pchMessageStart[1]  = $REGTEST_MESSAGE_S_1|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[2\] = 0xb5|pchMessageStart[2]  = $REGTEST_MESSAGE_S_2|g" src/chainparams.cpp
+sed -i "s|pchMessageStart\[3\] = 0xda|pchMessageStart[3]  = $REGTEST_MESSAGE_S_3|g" src/chainparams.cpp
 
 
 
