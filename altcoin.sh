@@ -312,6 +312,7 @@ sed -i "s|pchMessageStart\[3\] = 0xda|pchMessageStart[3]  = $REGTEST_MESSAGE_S_3
 # ovverrides difficulty compute algorithm and always return lowest limit
 if [ $ALWAYS_MINIMUM_DIFF == "TRUE" ]
 then
+  sed -i "s|00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|g" src/chainparams.cpp
   sed -i "s|unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();|unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();\n    return nProofOfWorkLimit;|g" src/pow.cpp
 else
   echo " "
