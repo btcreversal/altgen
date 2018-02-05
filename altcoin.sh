@@ -220,6 +220,56 @@ echo '    return true;' >> src/chainparams.cpp
 echo '}' >> src/chainparams.cpp
 echo '' >> src/chainparams.cpp
 
+sed -i -e 's+#include[[:space:]]"util.h"+#include "util.h"\n\nunsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params\& params);+g' src/pow.cpp
+
+echo 'unsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params& params) {' >> src/pow.cpp
+echo '    /* current difficulty formula, dash - DarkGravity v3, written by Evan Duffield - evan@dash.org */' >> src/pow.cpp
+echo '    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);' >> src/pow.cpp
+echo '    int64_t nPastBlocks = 24;' >> src/pow.cpp
+echo '    // make sure we have at least (nPastBlocks + 1) blocks, otherwise just return powLimit' >> src/pow.cpp
+echo '    if (!pindexLast || pindexLast->nHeight < nPastBlocks) {' >> src/pow.cpp
+echo '        return bnPowLimit.GetCompact();' >> src/pow.cpp
+echo '    }' >> src/pow.cpp
+echo '    const CBlockIndex *pindex = pindexLast;' >> src/pow.cpp
+echo '    arith_uint256 bnPastTargetAvg;' >> src/pow.cpp
+echo '    for (unsigned int nCountBlocks = 1; nCountBlocks <= nPastBlocks; nCountBlocks++) {' >> src/pow.cpp
+echo '        arith_uint256 bnTarget = arith_uint256().SetCompact(pindex->nBits);' >> src/pow.cpp
+echo '        if (nCountBlocks == 1) {' >> src/pow.cpp
+echo '            bnPastTargetAvg = bnTarget;' >> src/pow.cpp
+echo '        } else {' >> src/pow.cpp
+echo '            // NOTE: thats not an average really...' >> src/pow.cpp
+echo '            bnPastTargetAvg = (bnPastTargetAvg * nCountBlocks + bnTarget) / (nCountBlocks + 1);' >> src/pow.cpp
+echo '        }' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '        if(nCountBlocks != nPastBlocks) {' >> src/pow.cpp
+echo '            assert(pindex->pprev); // should never fail' >> src/pow.cpp
+echo '            pindex = pindex->pprev;' >> src/pow.cpp
+echo '        }' >> src/pow.cpp
+echo '    }' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '    arith_uint256 bnNew(bnPastTargetAvg);' >> src/pow.cpp
+echo '    int64_t nActualTimespan = pindexLast->GetBlockTime() - pindex->GetBlockTime();' >> src/pow.cpp
+echo '    // NOTE: is this accurate? nActualTimespan counts it for (nPastBlocks - 1) blocks only...' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '    int64_t nTargetTimespan = nPastBlocks * params.nPowTargetSpacing;' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '    if (nActualTimespan < nTargetTimespan/3)' >> src/pow.cpp
+echo '        nActualTimespan = nTargetTimespan/3;' >> src/pow.cpp
+echo '    if (nActualTimespan > nTargetTimespan*3)' >> src/pow.cpp
+echo '        nActualTimespan = nTargetTimespan*3;' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '    // Retarget' >> src/pow.cpp
+echo '    bnNew *= nActualTimespan;' >> src/pow.cpp
+echo '    bnNew /= nTargetTimespan;' >> src/pow.cpp
+echo '    if (bnNew > bnPowLimit) {' >> src/pow.cpp
+echo '        bnNew = bnPowLimit;' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '    }' >> src/pow.cpp
+echo '    return bnNew.GetCompact();' >> src/pow.cpp
+echo '}' >> src/pow.cpp
+echo '' >> src/pow.cpp
+echo '' >> src/pow.cpp
+
 
 sed -i "s;NY Times 05/Oct/2011 Steve Jobs, Apple’s Visionary, Dies at 56;$PHRASE;" src/chainparams.cpp
 # sed -i -e 's+NY[[:space:]]Times[[:space:]]05/Oct/2011[[:space:]]Steve Jobs,[[:space:]]Apple’s[[:space:]]Visionary,[[:space:]]Dies[[:space:]]at[[:space:]]56+Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible+g' src/chainparams.cpp
