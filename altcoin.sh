@@ -12,9 +12,9 @@ TESTNET_PORT="19135"
 MAINNET_GENESIS_TIMESTAMP="1516814253"
 TEST_GENESIS_TIMESTAMP="1516831393"
 REGTEST_GENESIS_TIMESTAMP="1516835334"
-MAIN_NONCE="132753"
-TEST_NONCE="473983"
-REGTEST_NONCE="4"
+MAIN_NONCE=`cat mainnonce.txt`
+TEST_NONCE=`cat testnonce.txt`
+REGTEST_NONCE=`cat regtestnonce.txt`
 BITS="0x1e0ffff0"
 POW_TARGET_SPACING="2.5 * 60"
 # must be "x * COIN"
@@ -25,13 +25,12 @@ MAINNET_ESTIMATED_TRANSACTIONS="0.01"
 TEST_ESTIMATED_TRANSACTIONS="0.001"
 
 # nVersion ? last is 4?
-MAIN_GENESIS_HASH="0xa0c48bcc34466b3ff4b389be18356d259d25283eba315ba145f763c30a360004"
-MAIN_MERKLE_HASH="0x090e7c6b03d9b9c426f74b90b62c33eac8459657323afbbda08e3db378777289"
-MAIN_GENESIS_HASH="0xa0c48bcc34466b3ff4b389be18356d259d25283eba315ba145f763c30a360004"
-TEST_GENESIS_HASH="0x8962d0dee2335ee803e1bc8232e717bb3e3c215c33df9e4065e37f50a582eea1"
-TEST_MERKLE_HASH="0x090e7c6b03d9b9c426f74b90b62c33eac8459657323afbbda08e3db378777289"
-REGTEST_GENESIS_HASH="0x80c8ae8834df771c1b75c24f0062a5191cba58aaf75775b20d48a89802249e12"
-REGTEST_MERKLE_HASH="0x090e7c6b03d9b9c426f74b90b62c33eac8459657323afbbda08e3db378777289"
+MAIN_GENESIS_HASH=`cat maingenesis.txt`
+MAIN_MERKLE_HASH=`cat mainmerkle.txt`
+TEST_GENESIS_HASH=`cat testgenesis.txt`
+TEST_MERKLE_HASH=`cat testmerkle.txt`
+REGTEST_GENESIS_HASH=`cat regtestgenesis.txt`
+REGTEST_MERKLE_HASH=`cat regtestmerkle.txt`
 
 #Message start strings (magic bytes)
 # The message start string is designed to be unlikely to occur in normal data.
@@ -82,6 +81,8 @@ GUI="FALSE"
 IF_BUILD="TRUE"
 #whether instal core client
 IF_INSTALL="TURE"
+#whether mine genesis blocks
+IF_GENESIS="FALSE"
 
 #*****************************************************************************************************
 COIN_NAME_LOWER=${COIN_NAME,,}
@@ -198,28 +199,64 @@ cp ../chainparamsseeds.h src/
 sed -i -e 's+#include[[:space:]]"crypto/scrypt.h"+#include "crypto/scrypt.h"\n\nextern "C" void yescrypt_hash(const char *input, char *output);+g' src/primitives/block.cpp
 sed -i -e 's+scrypt_1024_1_1_256+yescrypt_hash+g' src/primitives/block.cpp
 
+#add mining code
+if [ $IF_GENESIS == "TRUE" ]
+then
+  sed -i -e 's+#include[[:space:]]"chainparamsseeds.h"+#include "chainparamsseeds.h"\n#include "arith_uint256.h"\n#include <iostream>\n#include <fstream>\n\nbool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params\& params);\n\nbool mineMainnet = true;\nbool mineTestNet = true;\nbool mineRegtest = true;\n\nvoid mineGenesis(Consensus::Params\& consensus,CBlock\& genesis,std::string net="main");+g' src/chainparams.cpp
+  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1317972665,[[:space:]]2084524493,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1317972665, 2084524493, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis);+g' src/chainparams.cpp
+  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1486949366,[[:space:]]293345,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1486949366, 293345, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"test");+g' src/chainparams.cpp
+  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1296688602,[[:space:]]0,[[:space:]]0x207fffff,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1296688602, 0, 0x207fffff, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"regtest");\n        assert(false);+g' src/chainparams.cpp
 
-sed -i -e 's+#include[[:space:]]"chainparamsseeds.h"+#include "chainparamsseeds.h"\n#include "arith_uint256.h"\n\nbool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params\& params);+g' src/chainparams.cpp
-echo 'bool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params& params)' >> src/chainparams.cpp
-echo '{' >> src/chainparams.cpp
-echo '    bool fNegative;' >> src/chainparams.cpp
-echo '    bool fOverflow;' >> src/chainparams.cpp
-echo '    arith_uint256 bnTarget;' >> src/chainparams.cpp
-echo '' >> src/chainparams.cpp
-echo '    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);' >> src/chainparams.cpp
-echo '' >> src/chainparams.cpp
-echo '    // Check range' >> src/chainparams.cpp
-echo '    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))' >> src/chainparams.cpp
-echo '        return false;' >> src/chainparams.cpp
-echo '' >> src/chainparams.cpp
-echo '    // Check proof of work matches claimed amoun' >> src/chainparams.cpp
-echo '    if (UintToArith256(hash) > bnTarget)' >> src/chainparams.cpp
-echo '        return false;' >> src/chainparams.cpp
-echo '' >> src/chainparams.cpp
-echo '    return true;' >> src/chainparams.cpp
-echo '}' >> src/chainparams.cpp
-echo '' >> src/chainparams.cpp
+  echo 'bool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params& params)' >> src/chainparams.cpp
+  echo '{' >> src/chainparams.cpp
+  echo '    bool fNegative;' >> src/chainparams.cpp
+  echo '    bool fOverflow;' >> src/chainparams.cpp
+  echo '    arith_uint256 bnTarget;' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+  echo '    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+  echo '    // Check range' >> src/chainparams.cpp
+  echo '    if (fNegative || bnTarget == 0 || fOverflow || bnTarget > UintToArith256(params.powLimit))' >> src/chainparams.cpp
+  echo '        return false;' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+  echo '    // Check proof of work matches claimed amoun' >> src/chainparams.cpp
+  echo '    if (UintToArith256(hash) > bnTarget)' >> src/chainparams.cpp
+  echo '        return false;' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+  echo '    return true;' >> src/chainparams.cpp
+  echo '}' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
 
+  echo 'void mineGenesis(Consensus::Params& consensus,CBlock& genesis,std::string net)' >> src/chainparams.cpp
+  echo '{' >> src/chainparams.cpp
+  echo '    consensus.hashGenesisBlock = uint256S("0x01");' >> src/chainparams.cpp
+  echo '    int counter = 0;' >> src/chainparams.cpp
+  echo '    while(!CheckProofOfWorkCustom(genesis.GetPoWHash(), genesis.nBits, consensus)){' >> src/chainparams.cpp
+  echo '        if(genesis.nNonce % 1000000 == 0){' >> src/chainparams.cpp
+  echo '          std::cout << ++counter <<  "Mh " << std::flush ;' >> src/chainparams.cpp
+  echo '        }' >> src/chainparams.cpp
+  echo '        ++genesis.nNonce;' >> src/chainparams.cpp
+  echo '    }' >> src/chainparams.cpp
+  echo '    std::ofstream ofile;' >> src/chainparams.cpp
+  echo '    ofile.open("../"+net+"genesis.txt");' >> src/chainparams.cpp
+  echo '    ofile << "0x" << genesis.GetHash().ToString();' >> src/chainparams.cpp
+  echo '    ofile.close();' >> src/chainparams.cpp
+  echo '    ofile.open("../"+net+"merkle.txt");' >> src/chainparams.cpp
+  echo '    ofile << "0x" << genesis.hashMerkleRoot.ToString();' >> src/chainparams.cpp
+  echo '    ofile.close();' >> src/chainparams.cpp
+  echo '    ofile.open("../"+net+"nonce.txt");' >> src/chainparams.cpp
+  echo '    ofile << genesis.nNonce;' >> src/chainparams.cpp
+  echo '    ofile.close();' >> src/chainparams.cpp
+  echo '}' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+  echo '' >> src/chainparams.cpp
+
+else
+  echo " "
+fi
+
+# add DarkGravityWave v3 support
 sed -i -e 's+#include[[:space:]]"util.h"+#include "util.h"\n\nunsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params\& params);+g' src/pow.cpp
 sed -i -e 's+unsigned[[:space:]]int[[:space:]]nProofOfWorkLimit[[:space:]]=[[:space:]]UintToArith256(params.powLimit).GetCompact();+return DarkGravityWave(pindexLast,params);\n    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();+g' src/pow.cpp
 
@@ -441,7 +478,9 @@ fi
 
 if [ $IF_INSTALL == "TRUE" ]
 then
-  make install
+  sudo make install
 else
   echo " "
 fi
+
+src/mycoind
