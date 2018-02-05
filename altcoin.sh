@@ -221,6 +221,7 @@ echo '}' >> src/chainparams.cpp
 echo '' >> src/chainparams.cpp
 
 sed -i -e 's+#include[[:space:]]"util.h"+#include "util.h"\n\nunsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params\& params);+g' src/pow.cpp
+sed -i -e 's+unsigned[[:space:]]int[[:space:]]nProofOfWorkLimit[[:space:]]=[[:space:]]UintToArith256(params.powLimit).GetCompact();+return DarkGravityWave(pindexLast,params);\n    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();+g' src/pow.cpp
 
 echo 'unsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params& params) {' >> src/pow.cpp
 echo '    /* current difficulty formula, dash - DarkGravity v3, written by Evan Duffield - evan@dash.org */' >> src/pow.cpp
