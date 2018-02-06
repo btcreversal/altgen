@@ -1,7 +1,23 @@
 #!/bin/bash
+#******************************************** SCRIPT SETTINGS ***************************************
+# ovverrides difficulty compute algorithm and always return lowest limit
+ALWAYS_MINIMUM_DIFF="FALSE"
+# whether building on debian->TRUE or on ubuntu->FALSE
+DEBIAN="FALSE"
+# whether install dependencies or they are already installed
+INSTALL_DEPENDENCIES="FALSE"
+#whether build
+IF_BUILD="FALSE"
+# whether build with gui
+GUI="FALSE"
+#whether instal core client
+IF_INSTALL="FALSE"
+#whether mine genesis blocks. note: when TRUE also the IF_BUILD must be TRUE
+IF_GENESIS="FALSE"
 
+#*****************************************************************************************************
 
-# ******************************* Coin settings *******************************************
+#******************************* COIN SETTINGS *******************************************************
 COIN_NAME="Mycoin"
 COIN_UNIT="MYC"
 RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
@@ -11,29 +27,36 @@ TESTNET_PORT="19135"
 MAINNET_GENESIS_TIMESTAMP="1516814255"
 TEST_GENESIS_TIMESTAMP="1516831393"
 REGTEST_GENESIS_TIMESTAMP="1516835334"
-MAIN_NONCE=`cat mainnonce.txt`
-TEST_NONCE=`cat testnonce.txt`
-REGTEST_NONCE=`cat regtestnonce.txt`
-# genesis
-BITS="0x20000fff"
+
+# genesis block difficulty
+# note NBITS is in short difficulty encoding
+# https://bitcoin.stackexchange.com/questions/30467/what-are-the-equations-to-convert-between-bits-and-difficulty
+# first two numbers * 2 = number of positions                (maximum 0x20 = 64 positions)
+# last six numbers = difficulty prefix
+# please do not set NBITS greater than MIN_DIFF
+#
+# example:
+# 0x1d00ffff -> 0x00ffff0000000000000000000000000000000000000000000000000000
+# 0x20000fff -> 0x000fff0000000000000000000000000000000000000000000000000000000000          (0x20 = 64 positions    and   000fff = prefix )
+NBITS="0x20000fff"
+
+# minimum difficulty (but maximal threshold)
 MIN_DIFF="000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+# block time
+# "minutes * 60"
 POW_TARGET_SPACING="2.5 * 60"
-# must be "x * COIN"
+# genesis reward
+# must be exactly this format "x * COIN"
 GENESIS_REWARD="50 * COIN"
+
 HALVING_INTERVAL="840000"
-#mainnet estimated transactions per second
+# mainnet estimated transactions per second
 MAINNET_ESTIMATED_TRANSACTIONS="0.01"
+# testnet estimated transactions per second
 TEST_ESTIMATED_TRANSACTIONS="0.001"
 
-# nVersion ? last is 4?
-MAIN_GENESIS_HASH=`cat maingenesis.txt`
-MAIN_MERKLE_HASH=`cat mainmerkle.txt`
-TEST_GENESIS_HASH=`cat testgenesis.txt`
-TEST_MERKLE_HASH=`cat testmerkle.txt`
-REGTEST_GENESIS_HASH=`cat regtestgenesis.txt`
-REGTEST_MERKLE_HASH=`cat regtestmerkle.txt`
 
-#Message start strings (magic bytes)
+# Message start strings (magic bytes)
 # The message start string is designed to be unlikely to occur in normal data.
 # The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 # a large 32-bit integer with any alignment.
@@ -63,29 +86,22 @@ TEST_PREFIX_PUBLIC="(0x09)(0x33)(0x87)(0xCF)"
 TEST_PREFIX_SECRET="(0x09)(0x33)(0x83)(0x94)"
 # **************************************************************************************************
 
+#read mined genesis, merkle, nonce from file
+MAIN_NONCE=`cat mainnonce.txt`
+TEST_NONCE=`cat testnonce.txt`
+REGTEST_NONCE=`cat regtestnonce.txt`
+MAIN_GENESIS_HASH=`cat maingenesis.txt`
+MAIN_MERKLE_HASH=`cat mainmerkle.txt`
+TEST_GENESIS_HASH=`cat testgenesis.txt`
+TEST_MERKLE_HASH=`cat testmerkle.txt`
+REGTEST_GENESIS_HASH=`cat regtestgenesis.txt`
+REGTEST_MERKLE_HASH=`cat regtestmerkle.txt`
 
 
 
 
 
 
-# ******************************************** OTHER SETTINGS ***************************************
-# ovverrides difficulty compute algorithm and always return lowest limit
-ALWAYS_MINIMUM_DIFF="TRUE"
-# whether building on debian or on ubuntu
-DEBIAN="TRUE"
-# whether install dependencies or they are already installed
-INSTALL_DEPENDENCIES="FALSE"
-# whether build with gui
-GUI="FALSE"
-#whether
-IF_BUILD="TRUE"
-#whether instal core client
-IF_INSTALL="TURE"
-#whether mine genesis blocks
-IF_GENESIS="TRUE"
-
-#*****************************************************************************************************
 COIN_NAME_LOWER=${COIN_NAME,,}
 COIN_NAME_UPPER=${COIN_NAME^^}
 
@@ -338,9 +354,9 @@ sed -i "s/1486949366/$TEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
 sed -i "s/1296688602/$REGTEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
 
 
-sed -i -e "s/0x1e0ffff0/$BITS/g" src/chainparams.cpp
-sed -i -e "s/50 * COIN/$GENESIS_REWARD/g" src/chainparams.cpp
-sed -i -e "s/2.5 * 60/$POW_TARGET_SPACING/g" src/chainparams.cpp
+sed -i -e "s/0x1e0ffff0/$NBITS/g" src/chainparams.cpp
+sed -i -e "s/50 \* COIN/$GENESIS_REWARD/g" src/chainparams.cpp
+sed -i -e "s/2.5 \* 60/$POW_TARGET_SPACING/g" src/chainparams.cpp
 sed -i -e "s/840000/$HALVING_INTERVAL/g" src/chainparams.cpp
 
 
