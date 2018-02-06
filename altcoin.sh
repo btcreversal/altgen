@@ -38,6 +38,7 @@ REGTEST_GENESIS_TIMESTAMP="1516835334"
 # example:
 # 0x1d00ffff -> 0x00ffff0000000000000000000000000000000000000000000000000000
 # 0x20000fff -> 0x000fff0000000000000000000000000000000000000000000000000000000000          (0x20 = 64 positions    and   000fff = prefix )
+# 0x20000fff is blocktime under the minute on single i7 core with yescryptR16
 NBITS="0x20000fff"
 
 # minimum difficulty (but maximal threshold)
