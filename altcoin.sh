@@ -3,19 +3,20 @@
 
 # ******************************* Coin settings *******************************************
 COIN_NAME="Mycoin"
-rm -rf $COIN_NAME
 COIN_UNIT="MYC"
 RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
 PHRASE="Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible"
 MAINNET_PORT="9133"
 TESTNET_PORT="19135"
-MAINNET_GENESIS_TIMESTAMP="1516814253"
+MAINNET_GENESIS_TIMESTAMP="1516814255"
 TEST_GENESIS_TIMESTAMP="1516831393"
 REGTEST_GENESIS_TIMESTAMP="1516835334"
 MAIN_NONCE=`cat mainnonce.txt`
 TEST_NONCE=`cat testnonce.txt`
 REGTEST_NONCE=`cat regtestnonce.txt`
-BITS="0x1e0ffff0"
+# genesis
+BITS="0x20000fff"
+MIN_DIFF="000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 POW_TARGET_SPACING="2.5 * 60"
 # must be "x * COIN"
 GENESIS_REWARD="50 * COIN"
@@ -82,7 +83,7 @@ IF_BUILD="TRUE"
 #whether instal core client
 IF_INSTALL="TURE"
 #whether mine genesis blocks
-IF_GENESIS="FALSE"
+IF_GENESIS="TRUE"
 
 #*****************************************************************************************************
 COIN_NAME_LOWER=${COIN_NAME,,}
@@ -136,20 +137,23 @@ install_dependencies() {
 
 
 
+whole_stuff() {
+
 
 
 
 # download and unpack litecoin sources into new coin folder
-wget ${RELEASE_URL} -O ${COIN_NAME}.tar.gz
-mkdir ${COIN_NAME}
-tar -xf ${COIN_NAME}.tar.gz -C ./${COIN_NAME} --strip-components 1
-rm ${COIN_NAME}.tar.gz
+rm -rf $COIN_NAME_LOWER
+wget ${RELEASE_URL} -O ${COIN_NAME_LOWER}.tar.gz
+mkdir ${COIN_NAME_LOWER}
+tar -xf ${COIN_NAME_LOWER}.tar.gz -C ./${COIN_NAME_LOWER} --strip-components 1
+rm ${COIN_NAME_LOWER}.tar.gz
 
 # copy yescryptR16 files into new coin source folder
-cp -r hash ${COIN_NAME}/src/
+cp -r hash ${COIN_NAME_LOWER}/src/
 
 # pushd $COIN_NAME
-cd ${COIN_NAME}
+cd ${COIN_NAME_LOWER}
 
 
 if [ -d $COIN_NAME_LOWER ]; then
@@ -203,9 +207,10 @@ sed -i -e 's+scrypt_1024_1_1_256+yescrypt_hash+g' src/primitives/block.cpp
 if [ $IF_GENESIS == "TRUE" ]
 then
   sed -i -e 's+#include[[:space:]]"chainparamsseeds.h"+#include "chainparamsseeds.h"\n#include "arith_uint256.h"\n#include <iostream>\n#include <fstream>\n\nbool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params\& params);\n\nbool mineMainnet = true;\nbool mineTestNet = true;\nbool mineRegtest = true;\n\nvoid mineGenesis(Consensus::Params\& consensus,CBlock\& genesis,std::string net="main");+g' src/chainparams.cpp
-  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1317972665,[[:space:]]2084524493,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1317972665, 2084524493, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis);+g' src/chainparams.cpp
-  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1486949366,[[:space:]]293345,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1486949366, 293345, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"test");+g' src/chainparams.cpp
-  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1296688602,[[:space:]]0,[[:space:]]0x207fffff,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1296688602, 0, 0x207fffff, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"regtest");\n        assert(false);+g' src/chainparams.cpp
+  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1317972665,[[:space:]]2084524493,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1317972665, 0, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis);+g' src/chainparams.cpp
+  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1486949366,[[:space:]]293345,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1486949366, 0, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"test");+g' src/chainparams.cpp
+  sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1296688602,[[:space:]]0,[[:space:]]0x207fffff,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1296688602, 0, 0x207fffff, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"regtest");\n        exit(0);+g' src/chainparams.cpp
+  sed -i -e 's+assert(+//assert(+g' src/chainparams.cpp
 
   echo 'bool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params& params)' >> src/chainparams.cpp
   echo '{' >> src/chainparams.cpp
@@ -316,6 +321,10 @@ sed -i -e 's:fa09d204a83a768ed5a7c8d441fa62f2043abf420cff1226c7b4329aeb9d51cf:0x
 sed -i -e 's+consensus.BIP65Height[[:space:]]=[[:space:]]918684;+consensus.BIP65Height = 0;+g' src/chainparams.cpp
 sed -i -e 's+consensus.BIP66Height[[:space:]]=[[:space:]]811879;+consensus.BIP66Height = 0;+g' src/chainparams.cpp
 sed -i -e 's+vSeeds.emplace_back+//vSeeds.emplace_back+g' src/chainparams.cpp
+sed -i -e 's+vSeeds.push_back+//vSeeds.push_back+g' src/chainparams.cpp
+
+# sed -i -e 's+0x1e0ffff0+0x3a00ffff+g' src/chainparams.cpp
+
 
 sed -i "s/= 9333;/= $MAINNET_PORT;/" src/chainparams.cpp
 sed -i "s/= 19335;/= $TESTNET_PORT;/" src/chainparams.cpp
@@ -329,11 +338,10 @@ sed -i "s/1486949366/$TEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
 sed -i "s/1296688602/$REGTEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
 
 
-
-sed -i "0,/0x1e0ffff0/s//$BITS/" src/chainparams.cpp
-sed -i "s/50 * COIN/$GENESIS_REWARD/" src/chainparams.cpp
-sed -i "s/2.5 * 60/$POW_TARGET_SPACING/" src/chainparams.cpp
-sed -i "s/840000/$HALVING_INTERVAL/" src/chainparams.cpp
+sed -i -e "s/0x1e0ffff0/$BITS/g" src/chainparams.cpp
+sed -i -e "s/50 * COIN/$GENESIS_REWARD/g" src/chainparams.cpp
+sed -i -e "s/2.5 * 60/$POW_TARGET_SPACING/g" src/chainparams.cpp
+sed -i -e "s/840000/$HALVING_INTERVAL/g" src/chainparams.cpp
 
 
 # change minimum chain work (whole chain)
@@ -429,12 +437,12 @@ sed -i "s|pchMessageStart\[2\] = 0xb5|pchMessageStart[2]  = $REGTEST_MESSAGE_S_2
 sed -i "s|pchMessageStart\[3\] = 0xda|pchMessageStart[3]  = $REGTEST_MESSAGE_S_3|g" src/chainparams.cpp
 
 
-
+# set minimum difference
+sed -i "s|00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|$MIN_DIFF|g" src/chainparams.cpp
 
 # ovverrides difficulty compute algorithm and always return lowest limit
 if [ $ALWAYS_MINIMUM_DIFF == "TRUE" ]
 then
-  sed -i "s|00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff|g" src/chainparams.cpp
   sed -i "s|unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();|unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();\n    return nProofOfWorkLimit;|g" src/pow.cpp
 else
   echo " "
@@ -475,6 +483,26 @@ else
   echo " "
 fi
 
+if [ $IF_GENESIS == "TRUE" ]
+then
+  echo " "
+  echo "Mining genesis blocks now... this may take a while ... you can go and have some coffee or maybe a lunch :)"
+  src/${COIN_NAME_LOWER}d
+  echo "Genesis blocks mined"
+  IF_GENESIS="FALSE"
+  INSTALL_DEPENDENCIES="FALSE"
+fi
+
+}
+
+if [ $IF_GENESIS == "TRUE" ]
+then
+  whole_stuff
+  cd ..
+  whole_stuff
+else
+  whole_stuff
+fi
 
 if [ $IF_INSTALL == "TRUE" ]
 then
@@ -482,5 +510,3 @@ then
 else
   echo " "
 fi
-
-src/mycoind
