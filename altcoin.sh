@@ -506,6 +506,7 @@ fi
 
 if [ $IF_INSTALL == "TRUE" ]
 then
+  rm -rf ~/.${COIN_NAME_LOWER}
   sudo make install
 else
   echo " "
