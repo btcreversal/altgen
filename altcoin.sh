@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# You can generate the chainparamsseeds.h with script placed in coin folder /contrib/seeds/generate-seeds.py
+
 #******************************************** SCRIPT SETTINGS ***************************************
 # ovverrides difficulty compute algorithm and always return lowest limit
 ALWAYS_MINIMUM_DIFF="FALSE"
