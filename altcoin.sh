@@ -554,6 +554,11 @@ then
   sudo apt-get -y install g++-mingw-w64-x86-64
   sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev
   sudo chmod -R a+rw .
+  cd ..
+  cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win32
+  cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win64
+  
+  cd ${COIN_NAME_LOWER}win64
   PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
   cd depends
   make HOST=x86_64-w64-mingw32
@@ -561,8 +566,9 @@ then
   ./autogen.sh # not required when building from tarball
   CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
   make
-  make install DESTDIR=../win64install
-  make clean
+  make install DESTDIR=`pwd`/../win64install
+
+  cd ../${COIN_NAME_LOWER}win32
   PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
   cd depends
   make HOST=i686-w64-mingw32
@@ -570,7 +576,7 @@ then
   ./autogen.sh # not required when building from tarball
   CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
   make
-  make install DESTDIR=../win32install
+  make install DESTDIR=`pwd`/../win32install
 fi
 
 if [ $IF_INSTALL == "TRUE" ]
