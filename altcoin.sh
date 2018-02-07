@@ -21,6 +21,8 @@ IF_GENESIS="TRUE"
 # stored in genesiscoinbase.pem, genesiscoinbase.hex
 IF_KEYS="TRUE"
 
+CROSS_COMPILE"FALSE"
+
 
 #*****************************************************************************************************
 
@@ -133,7 +135,7 @@ install_dependencies() {
   #download_code
   if [ $GUI == "TRUE" ]
   then
-    sudo apt- -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+    sudo apt-get -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
     sudo apt-get -y install libqrencode-dev
   else
     echo " "
@@ -541,6 +543,33 @@ then
   whole_stuff
 else
   whole_stuff
+fi
+
+if [ $CROSS_COMPILE == "TRUE" ]
+then
+  mkdir ../win32install
+  mkdir ../win64install
+  sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+  sudo apt-get -y install g++-mingw-w64-x86-64
+  sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev
+  sudo chmod -R a+rw .
+  PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
+  cd depends
+  make HOST=x86_64-w64-mingw32
+  cd ..
+  ./autogen.sh # not required when building from tarball
+  CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
+  make
+  make install DESTDIR=../win64install
+  make clean
+  PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
+  cd depends
+  make HOST=i686-w64-mingw32
+  cd ..
+  ./autogen.sh # not required when building from tarball
+  CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
+  make
+  make install DESTDIR=../win32install
 fi
 
 if [ $IF_INSTALL == "TRUE" ]
