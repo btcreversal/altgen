@@ -21,7 +21,8 @@ IF_GENESIS="TRUE"
 # stored in genesiscoinbase.pem, genesiscoinbase.hex
 IF_KEYS="TRUE"
 
-CROSS_COMPILE"FALSE"
+# whether cross compile for windows (32 + 64 bit)
+CROSS_COMPILE="FALSE"
 
 
 #*****************************************************************************************************
