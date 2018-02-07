@@ -10,13 +10,17 @@ DEBIAN="FALSE"
 # whether install dependencies or they are already installed
 INSTALL_DEPENDENCIES="FALSE"
 #whether build
-IF_BUILD="FALSE"
+IF_BUILD="TRUE"
 # whether build with gui
 GUI="FALSE"
 #whether instal core client
 IF_INSTALL="FALSE"
 #whether mine genesis blocks. note: when TRUE also the IF_BUILD must be TRUE
-IF_GENESIS="FALSE"
+IF_GENESIS="TRUE"
+# whether generate genesis coinbase key
+# stored in genesiscoinbase.pem, genesiscoinbase.hex
+IF_KEYS="TRUE"
+
 
 #*****************************************************************************************************
 
@@ -90,16 +94,6 @@ TEST_PREFIX_PUBLIC="(0x09)(0x33)(0x87)(0xCF)"
 TEST_PREFIX_SECRET="(0x09)(0x33)(0x83)(0x94)"
 # **************************************************************************************************
 
-#read mined genesis, merkle, nonce from file
-MAIN_NONCE=`cat mainnonce.txt`
-TEST_NONCE=`cat testnonce.txt`
-REGTEST_NONCE=`cat regtestnonce.txt`
-MAIN_GENESIS_HASH=`cat maingenesis.txt`
-MAIN_MERKLE_HASH=`cat mainmerkle.txt`
-TEST_GENESIS_HASH=`cat testgenesis.txt`
-TEST_MERKLE_HASH=`cat testmerkle.txt`
-REGTEST_GENESIS_HASH=`cat regtestgenesis.txt`
-REGTEST_MERKLE_HASH=`cat regtestmerkle.txt`
 
 
 
@@ -120,15 +114,16 @@ installdb_debian() {
 }
 
 installdb_ubuntu() {
-  sudo apt-get install software-properties-common
-  sudo add-apt-repository ppa:bitcoin/bitcoin
-  sudo apt-get update
-  sudo apt-get install libdb4.8-dev libdb4.8++-dev
+  sudo apt-get -y install software-properties-common
+  sudo add-apt-repository -y ppa:bitcoin/bitcoin
+  sudo apt-get -y update
+  sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
 }
 
 
 install_dependencies() {
   apt-get -y install sudo
+  sudo apt-get -y install automake pkg-config libevent-dev bsdmainutils
   sudo apt-get -y install git
   sudo apt-get -y install build-essential
   sudo apt-get -y install libtool autotools-dev autoconf
@@ -138,8 +133,8 @@ install_dependencies() {
   #download_code
   if [ $GUI == "TRUE" ]
   then
-    sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
-    sudo apt-get install libqrencode-dev
+    sudo apt- -y install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler
+    sudo apt-get -y install libqrencode-dev
   else
     echo " "
   fi
@@ -155,12 +150,30 @@ install_dependencies() {
 }
 
 
-
+if [ $IF_KEYS == "TRUE" ]
+then
+  # openssl ecparam -genkey -name secp256k1 -out alertkey.pem
+  # openssl ec -in alertkey.pem -text > alertkey.hex
+  # openssl ecparam -genkey -name secp256k1 -out testnetalert.pem
+  # openssl ec -in testnetalert.pem -text > testnetalert.hex
+  openssl ecparam -genkey -name secp256k1 -out genesiscoinbase.pem
+  openssl ec -in genesiscoinbase.pem -text > genesiscoinbase.hex
+fi
+# MAINALERTKEY=`./readkey.sh alertkey.hex`
+# TESTALERTKEY=`./readkey.sh testnetalert.hex`
+GENESISCOINBASEKEY=`./readkey.sh genesiscoinbase.hex`
 
 whole_stuff() {
-
-
-
+#read mined genesis, merkle, nonce from file
+MAIN_NONCE=`cat mainnonce.txt`
+TEST_NONCE=`cat testnonce.txt`
+REGTEST_NONCE=`cat regtestnonce.txt`
+MAIN_GENESIS_HASH=`cat maingenesis.txt`
+MAIN_MERKLE_HASH=`cat mainmerkle.txt`
+TEST_GENESIS_HASH=`cat testgenesis.txt`
+TEST_MERKLE_HASH=`cat testmerkle.txt`
+REGTEST_GENESIS_HASH=`cat regtestgenesis.txt`
+REGTEST_MERKLE_HASH=`cat regtestmerkle.txt`
 
 # download and unpack litecoin sources into new coin folder
 rm -rf $COIN_NAME_LOWER
@@ -180,7 +193,6 @@ if [ -d $COIN_NAME_LOWER ]; then
     echo "Warning: $COIN_NAME_LOWER already existing"
     return 0
 fi
-# clone litecoin
 
 
 # first rename all directories
@@ -222,6 +234,13 @@ cp ../chainparamsseeds.h src/
 #change hash to yescrypt
 sed -i -e 's+#include[[:space:]]"crypto/scrypt.h"+#include "crypto/scrypt.h"\n\nextern "C" void yescrypt_hash(const char *input, char *output);+g' src/primitives/block.cpp
 sed -i -e 's+scrypt_1024_1_1_256+yescrypt_hash+g' src/primitives/block.cpp
+
+#change genesis coinbase key
+sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9;$GENESISCOINBASEKEY;" src/chainparams.cpp
+#change mainnet alertkey
+# sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9;$MAINALERTKEY;" src/chainparams.cpp
+#change testnet alertkey
+# sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9;$TESTALERTKEY;" src/chainparams.cpp
 
 #add mining code
 if [ $IF_GENESIS == "TRUE" ]
