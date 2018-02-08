@@ -10,19 +10,19 @@ DEBIAN="FALSE"
 # whether install dependencies or they are already installed
 INSTALL_DEPENDENCIES="FALSE"
 #whether build
-IF_BUILD="TRUE"
+IF_BUILD="FALSE"
 # whether build with gui
 GUI="FALSE"
 #whether instal core client
 IF_INSTALL="FALSE"
 #whether mine genesis blocks. note: when TRUE also the IF_BUILD must be TRUE
-IF_GENESIS="TRUE"
+IF_GENESIS="FALSE"
 # whether generate genesis coinbase key
 # stored in genesiscoinbase.pem, genesiscoinbase.hex
-IF_KEYS="TRUE"
+IF_KEYS="FALSE"
 
 # whether cross compile for windows (32 + 64 bit)
-CROSS_COMPILE="FALSE"
+CROSS_COMPILE="TRUE"
 
 
 #*****************************************************************************************************
