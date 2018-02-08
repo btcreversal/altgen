@@ -557,14 +557,14 @@ then
   cd ..
   cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win32
   cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win64
-  
+
   cd ${COIN_NAME_LOWER}win64
   PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
   cd depends
   make HOST=x86_64-w64-mingw32
   cd ..
   ./autogen.sh # not required when building from tarball
-  CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
+  CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --disable-tests --disable-gui-tests --disable-bench --prefix=/
   make
   make install DESTDIR=`pwd`/../win64install
 
@@ -574,7 +574,7 @@ then
   make HOST=i686-w64-mingw32
   cd ..
   ./autogen.sh # not required when building from tarball
-  CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
+  CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure  --disable-tests --disable-gui-tests --disable-bench --prefix=/
   make
   make install DESTDIR=`pwd`/../win32install
 fi
