@@ -1,7 +1,7 @@
 #!/bin/bash
 
+exec bash
 source config.sh
-source ~/.bashrc
 
 COIN_NAME_LOWER=${COIN_NAME,,}
 COIN_NAME_UPPER=${COIN_NAME^^}
