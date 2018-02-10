@@ -6,8 +6,6 @@
 export ALWAYS_MINIMUM_DIFF="FALSE"
 # whether building on debian->TRUE or on ubuntu->FALSE
 export DEBIAN="FALSE"
-# whether install dependencies or they are already installed
-export INSTALL_DEPENDENCIES="FALSE"
 # whether build with gui
 export GUI="FALSE"
 #whether mine genesis blocks. note: when TRUE also the IF_BUILD must be TRUE
@@ -15,10 +13,6 @@ export IF_GENESIS="TRUE"
 # whether generate genesis coinbase key
 # stored in genesiscoinbase.pem, genesiscoinbase.hex
 export IF_KEYS="FALSE"
-
-
-
-
 #*****************************************************************************************************
 
 #******************************* COIN SETTINGS *******************************************************
@@ -66,7 +60,7 @@ export HALVING_INTERVAL="840000"
 # validation code, the exact value of the MAX_MONEY constant is consensus
 # critical; in unusual circumstances like a(nother) overflow bug that allowed
 # for the creation of coins out of thin air modification could lead to a fork.
-export MAX_MONEY="42000000"
+export MAX_MONEY="42000001"
 
 # mainnet estimated transactions per second
 export MAINNET_ESTIMATED_TRANSACTIONS="0.01"

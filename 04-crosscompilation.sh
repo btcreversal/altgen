@@ -15,7 +15,7 @@ COIN_NAME_UPPER=${COIN_NAME^^}
   sudo apt-get -y install g++-mingw-w64-x86-64
   sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev
   sudo chmod -R a+rw .
-  cd ..
+  
   cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win32
   cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win64
 
