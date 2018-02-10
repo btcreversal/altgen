@@ -52,4 +52,4 @@ install_dependencies() {
 
 
 install_dependencies
-echo "Please restart before you continue.... or at least ->  log out, log in"
+echo "Please reboot before you continue.... or at least ->  log out, log in"
