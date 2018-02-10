@@ -11,6 +11,7 @@ installdb_debian() {
   ./install_db4.sh `pwd`
   export BDB_PREFIX=`pwd`'/db4'
   echo "export BDB_PREFIX='${BDB_PREFIX}'" >> ~/.bashrc
+  ldconfig
   # ./configure LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
 }
 
@@ -19,6 +20,7 @@ installdb_ubuntu() {
   sudo add-apt-repository -y ppa:bitcoin/bitcoin
   sudo apt-get -y update
   sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
+  sudo ldconfig
 }
 
 
@@ -52,4 +54,3 @@ install_dependencies() {
 
 
 install_dependencies
-echo "Please reboot before you continue.... or at least ->  log out, log in"
