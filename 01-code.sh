@@ -1,101 +1,33 @@
 #!/bin/bash
 
-# You can generate the chainparamsseeds.h with script placed in coin folder /contrib/seeds/generate-seeds.py
-
-#******************************************** SCRIPT SETTINGS ***************************************
-# ovverrides difficulty compute algorithm and always return lowest limit
-ALWAYS_MINIMUM_DIFF="FALSE"
-# whether building on debian->TRUE or on ubuntu->FALSE
-DEBIAN="FALSE"
-# whether install dependencies or they are already installed
-INSTALL_DEPENDENCIES="FALSE"
-#whether build
-IF_BUILD="FALSE"
-# whether build with gui
-GUI="FALSE"
-#whether instal core client
-IF_INSTALL="FALSE"
-#whether mine genesis blocks. note: when TRUE also the IF_BUILD must be TRUE
-IF_GENESIS="FALSE"
-# whether generate genesis coinbase key
-# stored in genesiscoinbase.pem, genesiscoinbase.hex
-IF_KEYS="FALSE"
-
-# whether cross compile for windows (32 + 64 bit)
-CROSS_COMPILE="TRUE"
-
-
-#*****************************************************************************************************
-
-#******************************* COIN SETTINGS *******************************************************
-COIN_NAME="Mycoin"
-COIN_UNIT="MYC"
-RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
-PHRASE="Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible"
-MAINNET_PORT="9133"
-TESTNET_PORT="19135"
-MAINNET_GENESIS_TIMESTAMP="1516814255"
-TEST_GENESIS_TIMESTAMP="1516831393"
-REGTEST_GENESIS_TIMESTAMP="1516835334"
-
-# genesis block difficulty
-# note NBITS is in short difficulty encoding
-# https://bitcoin.stackexchange.com/questions/30467/what-are-the-equations-to-convert-between-bits-and-difficulty
-# first two numbers * 2 = number of positions                (maximum 0x20 = 64 positions)
-# last six numbers = difficulty prefix
-# please do not set NBITS greater than MIN_DIFF
-#
-# example:
-# 0x1d00ffff -> 0x00ffff0000000000000000000000000000000000000000000000000000
-# 0x20000fff -> 0x000fff0000000000000000000000000000000000000000000000000000000000          (0x20 = 64 positions    and   000fff = prefix )
-# 0x20000fff is blocktime under the minute on single i7 core with yescryptR16
-NBITS="0x20000fff"
-
-# minimum difficulty (but maximal threshold)
-MIN_DIFF="000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-# block time
-# "minutes * 60"
-POW_TARGET_SPACING="2.5 * 60"
-# genesis reward
-# must be exactly this format "x * COIN"
-GENESIS_REWARD="50 * COIN"
-
-HALVING_INTERVAL="840000"
-# mainnet estimated transactions per second
-MAINNET_ESTIMATED_TRANSACTIONS="0.01"
-# testnet estimated transactions per second
-TEST_ESTIMATED_TRANSACTIONS="0.001"
-
-
+if [ "$1" = "-nogenesis" ]; then
+  source config.sh
+  IF_GENESIS="FALSE"
+  INSTALL_DEPENDENCIES="FALSE"
+  IF_KEYS="FALSE"
+else
+  source config.sh
+fi
 # Message start strings (magic bytes)
 # The message start string is designed to be unlikely to occur in normal data.
 # The characters are rarely used upper ASCII, not valid as UTF-8, and produce
 # a large 32-bit integer with any alignment.
 #MAINNET
-MAIN_MESSAGE_S_0="0xfb"
-MAIN_MESSAGE_S_1="0xf9"
-MAIN_MESSAGE_S_2="0xb6"
-MAIN_MESSAGE_S_3="0xbe"
+MAIN_MESSAGE_S_0=`cat magicbytes/MAIN_MESSAGE_S_0.txt`
+MAIN_MESSAGE_S_1=`cat magicbytes/MAIN_MESSAGE_S_1.txt`
+MAIN_MESSAGE_S_2=`cat magicbytes/MAIN_MESSAGE_S_2.txt`
+MAIN_MESSAGE_S_3=`cat magicbytes/MAIN_MESSAGE_S_3.txt`
 #TESTNET
-TEST_MESSAGE_S_0="0xfd"
-TEST_MESSAGE_S_1="0xd2"
-TEST_MESSAGE_S_2="0xd9"
-TEST_MESSAGE_S_3="0xf1"
+TEST_MESSAGE_S_0=`cat magicbytes/TEST_MESSAGE_S_0.txt`
+TEST_MESSAGE_S_1=`cat magicbytes/TEST_MESSAGE_S_1.txt`
+TEST_MESSAGE_S_2=`cat magicbytes/TEST_MESSAGE_S_2.txt`
+TEST_MESSAGE_S_3=`cat magicbytes/TEST_MESSAGE_S_3.txt`
 #REGTEST
-REGTEST_MESSAGE_S_0="0xfa"
-REGTEST_MESSAGE_S_1="0xbf"
-REGTEST_MESSAGE_S_2="0xb4"
-REGTEST_MESSAGE_S_3="0xd8"
+REGTEST_MESSAGE_S_0=`cat magicbytes/REGTEST_MESSAGE_S_0.txt`
+REGTEST_MESSAGE_S_1=`cat magicbytes/REGTEST_MESSAGE_S_1.txt`
+REGTEST_MESSAGE_S_2=`cat magicbytes/REGTEST_MESSAGE_S_2.txt`
+REGTEST_MESSAGE_S_3=`cat magicbytes/REGTEST_MESSAGE_S_3.txt`
 
-# key string prefixes mainnet
-# there are certain rules firs must be the same through all nets, second must be the same within the net, last two must differ
-MAIN_PREFIX_PUBLIC="(0x09)(0x44)(0xA2)(0x2E)"
-MAIN_PREFIX_SECRET="(0x09)(0x44)(0xA1)(0xE2)"
-
-#key string prefixes testnet
-TEST_PREFIX_PUBLIC="(0x09)(0x33)(0x87)(0xCF)"
-TEST_PREFIX_SECRET="(0x09)(0x33)(0x83)(0x94)"
-# **************************************************************************************************
 
 
 
@@ -159,24 +91,24 @@ then
   # openssl ec -in alertkey.pem -text > alertkey.hex
   # openssl ecparam -genkey -name secp256k1 -out testnetalert.pem
   # openssl ec -in testnetalert.pem -text > testnetalert.hex
-  openssl ecparam -genkey -name secp256k1 -out genesiscoinbase.pem
-  openssl ec -in genesiscoinbase.pem -text > genesiscoinbase.hex
+  openssl ecparam -genkey -name secp256k1 -out genesis/genesiscoinbase.pem
+  openssl ec -in genesis/genesiscoinbase.pem -text > genesis/genesiscoinbase.hex
 fi
 # MAINALERTKEY=`./readkey.sh alertkey.hex`
 # TESTALERTKEY=`./readkey.sh testnetalert.hex`
-GENESISCOINBASEKEY=`./readkey.sh genesiscoinbase.hex`
+GENESISCOINBASEKEY=`./readkey.sh genesis/genesiscoinbase.hex`
 
 whole_stuff() {
 #read mined genesis, merkle, nonce from file
-MAIN_NONCE=`cat mainnonce.txt`
-TEST_NONCE=`cat testnonce.txt`
-REGTEST_NONCE=`cat regtestnonce.txt`
-MAIN_GENESIS_HASH=`cat maingenesis.txt`
-MAIN_MERKLE_HASH=`cat mainmerkle.txt`
-TEST_GENESIS_HASH=`cat testgenesis.txt`
-TEST_MERKLE_HASH=`cat testmerkle.txt`
-REGTEST_GENESIS_HASH=`cat regtestgenesis.txt`
-REGTEST_MERKLE_HASH=`cat regtestmerkle.txt`
+MAIN_NONCE=`cat genesis/mainnonce.txt`
+TEST_NONCE=`cat genesis/testnonce.txt`
+REGTEST_NONCE=`cat genesis/regtestnonce.txt`
+MAIN_GENESIS_HASH=`cat genesis/maingenesis.txt`
+MAIN_MERKLE_HASH=`cat genesis/mainmerkle.txt`
+TEST_GENESIS_HASH=`cat genesis/testgenesis.txt`
+TEST_MERKLE_HASH=`cat genesis/testmerkle.txt`
+REGTEST_GENESIS_HASH=`cat genesis/regtestgenesis.txt`
+REGTEST_MERKLE_HASH=`cat genesis/regtestmerkle.txt`
 
 # download and unpack litecoin sources into new coin folder
 rm -rf $COIN_NAME_LOWER
@@ -216,7 +148,7 @@ for i in $(find . -type f | grep -v "^./.git"); do
     sed -i "s/LTC/$COIN_UNIT/g" $i
 done
 
-# popd
+sed -i "s/84000000/$MAX_MONEY/" src/amount.h
 
 # add yescryptR16 sources to autogen makefile
 sed -i -e 's#consensus/validation.h[[:space:]]\\#consensus/validation.h \\\n  hash/yescrypt/yescrypt.h \\\n  hash/yescrypt/yescrypt.c \\\n  hash/yescrypt/sha256.h \\\n  hash/yescrypt/sha256_c.h \\\n  hash/yescrypt/yescrypt-best_c.h \\\n  hash/yescrypt/sysendian.h \\\n  hash/yescrypt/yescrypt-platform_c.h \\\n  hash/yescrypt/yescrypt-opt_c.h \\\n  hash/yescrypt/yescrypt-simd_c.h \\#g' src/Makefile.am
@@ -248,6 +180,49 @@ sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4
 #add mining code
 if [ $IF_GENESIS == "TRUE" ]
 then
+  #MAINNET
+  MAIN_MESSAGE_S_0="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  MAIN_MESSAGE_S_0=${MAIN_MESSAGE_S_0,,}
+  echo $MAIN_MESSAGE_S_0 > ../magicbytes/MAIN_MESSAGE_S_0.txt
+  MAIN_MESSAGE_S_1="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  MAIN_MESSAGE_S_1=${MAIN_MESSAGE_S_1,,}
+  echo $MAIN_MESSAGE_S_1 > ../magicbytes/MAIN_MESSAGE_S_1.txt
+  MAIN_MESSAGE_S_2="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  MAIN_MESSAGE_S_2=${MAIN_MESSAGE_S_2,,}
+  echo $MAIN_MESSAGE_S_2 > ../magicbytes/MAIN_MESSAGE_S_2.txt
+  MAIN_MESSAGE_S_3="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  MAIN_MESSAGE_S_3=${MAIN_MESSAGE_S_3,,}
+  echo $MAIN_MESSAGE_S_3 > ../magicbytes/MAIN_MESSAGE_S_3.txt
+  #TESTNET
+  TEST_MESSAGE_S_0="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  TEST_MESSAGE_S_0=${TEST_MESSAGE_S_0,,}
+  echo $TEST_MESSAGE_S_0 > ../magicbytes/TEST_MESSAGE_S_0.txt
+  TEST_MESSAGE_S_1="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  TEST_MESSAGE_S_1=${TEST_MESSAGE_S_1,,}
+  echo $TEST_MESSAGE_S_1 > ../magicbytes/TEST_MESSAGE_S_1.txt
+  TEST_MESSAGE_S_2="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  TEST_MESSAGE_S_2=${TEST_MESSAGE_S_2,,}
+  echo $TEST_MESSAGE_S_2 > ../magicbytes/TEST_MESSAGE_S_2.txt
+  TEST_MESSAGE_S_3="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  TEST_MESSAGE_S_3=${TEST_MESSAGE_S_3,,}
+  echo $TEST_MESSAGE_S_3 > ../magicbytes/TEST_MESSAGE_S_3.txt
+  #REGTEST
+  REGTEST_MESSAGE_S_0="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  REGTEST_MESSAGE_S_0=${REGTEST_MESSAGE_S_0,,}
+  echo $REGTEST_MESSAGE_S_0 > ../magicbytes/REGTEST_MESSAGE_S_0.txt
+  REGTEST_MESSAGE_S_1="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  REGTEST_MESSAGE_S_1=${REGTEST_MESSAGE_S_1,,}
+  echo $REGTEST_MESSAGE_S_1 > ../magicbytes/REGTEST_MESSAGE_S_1.txt
+  REGTEST_MESSAGE_S_2="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  REGTEST_MESSAGE_S_2=${REGTEST_MESSAGE_S_2,,}
+  echo $REGTEST_MESSAGE_S_2 > ../magicbytes/REGTEST_MESSAGE_S_2.txt
+  REGTEST_MESSAGE_S_3="0x"`for i in $(seq 1 2); do echo -n $(echo "obase=16; $(($RANDOM % 16))" | bc); done; echo`
+  REGTEST_MESSAGE_S_3=${REGTEST_MESSAGE_S_3,,}
+  echo $REGTEST_MESSAGE_S_3 > ../magicbytes/REGTEST_MESSAGE_S_3.txt
+
+
+
+
   sed -i -e 's+#include[[:space:]]"chainparamsseeds.h"+#include "chainparamsseeds.h"\n#include "arith_uint256.h"\n#include <iostream>\n#include <fstream>\n\nbool CheckProofOfWorkCustom(uint256 hash, unsigned int nBits, const Consensus::Params\& params);\n\nbool mineMainnet = true;\nbool mineTestNet = true;\nbool mineRegtest = true;\n\nvoid mineGenesis(Consensus::Params\& consensus,CBlock\& genesis,std::string net="main");+g' src/chainparams.cpp
   sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1317972665,[[:space:]]2084524493,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1317972665, 0, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis);+g' src/chainparams.cpp
   sed -i -e 's+genesis[[:space:]]=[[:space:]]CreateGenesisBlock(1486949366,[[:space:]]293345,[[:space:]]0x1e0ffff0,[[:space:]]1,[[:space:]]50[[:space:]]\*[[:space:]]COIN);+genesis = CreateGenesisBlock(1486949366, 0, 0x1e0ffff0, 1, 50 * COIN);\n        mineGenesis(consensus,genesis,"test");+g' src/chainparams.cpp
@@ -286,13 +261,13 @@ then
   echo '        ++genesis.nNonce;' >> src/chainparams.cpp
   echo '    }' >> src/chainparams.cpp
   echo '    std::ofstream ofile;' >> src/chainparams.cpp
-  echo '    ofile.open("../"+net+"genesis.txt");' >> src/chainparams.cpp
+  echo '    ofile.open("../genesis/"+net+"genesis.txt");' >> src/chainparams.cpp
   echo '    ofile << "0x" << genesis.GetHash().ToString();' >> src/chainparams.cpp
   echo '    ofile.close();' >> src/chainparams.cpp
-  echo '    ofile.open("../"+net+"merkle.txt");' >> src/chainparams.cpp
+  echo '    ofile.open("../genesis/"+net+"merkle.txt");' >> src/chainparams.cpp
   echo '    ofile << "0x" << genesis.hashMerkleRoot.ToString();' >> src/chainparams.cpp
   echo '    ofile.close();' >> src/chainparams.cpp
-  echo '    ofile.open("../"+net+"nonce.txt");' >> src/chainparams.cpp
+  echo '    ofile.open("../genesis/"+net+"nonce.txt");' >> src/chainparams.cpp
   echo '    ofile << genesis.nNonce;' >> src/chainparams.cpp
   echo '    ofile.close();' >> src/chainparams.cpp
   echo '}' >> src/chainparams.cpp
@@ -496,93 +471,6 @@ then
 else
   echo " "
 fi
-
-
-
-if [ $IF_BUILD == "TRUE" ]
-then
-  #build sources for linux
-  ./autogen.sh
-  if [ $DEBIAN == "TRUE" ]
-  then
-    if [ $GUI == "TRUE" ]
-    then
-      ./configure --disable-tests LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
-    else
-      ./configure --without-gui --disable-tests LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
-    fi
-  else
-    if [ $GUI == "TRUE" ]
-    then
-      ./configure --disable-tests
-    else
-      ./configure --disable-tests --without-gui
-    fi
-  fi
-  export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
-  make
-else
-  echo " "
-fi
-
-if [ $IF_GENESIS == "TRUE" ]
-then
-  echo " "
-  echo "Mining genesis blocks now... this may take a while ... you can go and have some coffee or maybe a lunch :)"
-  src/${COIN_NAME_LOWER}d
-  echo "Genesis blocks mined"
-  IF_GENESIS="FALSE"
-  INSTALL_DEPENDENCIES="FALSE"
-fi
-
 }
 
-if [ $IF_GENESIS == "TRUE" ]
-then
-  whole_stuff
-  cd ..
-  whole_stuff
-else
-  whole_stuff
-fi
-
-if [ $CROSS_COMPILE == "TRUE" ]
-then
-  mkdir ../win32install
-  mkdir ../win64install
-  sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
-  sudo apt-get -y install g++-mingw-w64-x86-64
-  sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev
-  sudo chmod -R a+rw .
-  cd ..
-  cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win32
-  cp -r ${COIN_NAME_LOWER} ${COIN_NAME_LOWER}win64
-
-  cd ${COIN_NAME_LOWER}win64
-  PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
-  cd depends
-  make HOST=x86_64-w64-mingw32
-  cd ..
-  ./autogen.sh # not required when building from tarball
-  CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --disable-tests --disable-gui-tests --disable-bench --prefix=/
-  make
-  make install DESTDIR=`pwd`/../win64install
-
-  cd ../${COIN_NAME_LOWER}win32
-  PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
-  cd depends
-  make HOST=i686-w64-mingw32
-  cd ..
-  ./autogen.sh # not required when building from tarball
-  CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure  --disable-tests --disable-gui-tests --disable-bench --prefix=/
-  make
-  make install DESTDIR=`pwd`/../win32install
-fi
-
-if [ $IF_INSTALL == "TRUE" ]
-then
-  rm -rf ~/.${COIN_NAME_LOWER}
-  sudo make install
-else
-  echo " "
-fi
+whole_stuff
