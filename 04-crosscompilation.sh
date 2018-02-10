@@ -9,8 +9,8 @@ COIN_NAME_UPPER=${COIN_NAME^^}
 
 
 
-  mkdir ../win32install
-  mkdir ../win64install
+  mkdir win32install
+  mkdir win64install
   sudo apt-get -y install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
   sudo apt-get -y install g++-mingw-w64-x86-64
   sudo apt-get -y install g++-mingw-w64-i686 mingw-w64-i686-dev
