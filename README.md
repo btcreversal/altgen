@@ -44,8 +44,7 @@ UNIX - create custom coin
       magicbytes/*
       seeds/nodes_main.txt
       seeds/nodes_test.txt
-      seeds/chainparamsseeds.h should contain hard coded seed servers. This file you can generate with script placed in coin folder /contrib/seeds/generate-seeds.py
-
+      seeds/chainparamsseeds.h should contain hard coded seed servers.
 UNIX INSTALL
 
 - If you would like to install coin on your build computer just run ./03-unixinstall.sh
