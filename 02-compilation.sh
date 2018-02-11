@@ -75,7 +75,7 @@ else
   fi
 fi
 export NUMCPUS=`grep -c '^processor' /proc/cpuinfo`
-make -j 6
+make
 
 
 if [ $IF_GENESIS == "TRUE" ]
