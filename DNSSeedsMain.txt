@@ -1,0 +1,2 @@
+seed.elicoin.cz
+seed.elicoin-backup.cz

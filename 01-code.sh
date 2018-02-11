@@ -1,5 +1,9 @@
 #!/bin/bash
 
+cd seeds
+python3 generate-seeds.py ./ > chainparamsseeds.h
+cd ..
+
 if [ "$1" = "-nogenesis" ]; then
   source config.sh
   IF_GENESIS="FALSE"
@@ -119,7 +123,7 @@ sed -i -e 's#// Once this function has returned false, it must remain false.#ret
 sed -i -e 's#if[[:space:]](nHeight[[:space:]]>=[[:space:]]consensusParams.BIP34Height)#//if (nHeight >= consensusParams.BIP34Height)\n    if(false)#g' src/validation.cpp
 
 #copy seeds file
-cp ../chainparamsseeds.h src/
+cp ../seeds/chainparamsseeds.h src/
 
 #change hash to yescrypt
 sed -i -e 's+#include[[:space:]]"crypto/scrypt.h"+#include "crypto/scrypt.h"\n\nextern "C" void yescrypt_hash(const char *input, char *output);+g' src/primitives/block.cpp
@@ -295,7 +299,27 @@ sed -i -e 's+consensus.BIP66Height[[:space:]]=[[:space:]]811879;+consensus.BIP66
 sed -i -e 's+vSeeds.emplace_back+//vSeeds.emplace_back+g' src/chainparams.cpp
 sed -i -e 's+vSeeds.push_back+//vSeeds.push_back+g' src/chainparams.cpp
 
-# sed -i -e 's+0x1e0ffff0+0x3a00ffff+g' src/chainparams.cpp
+
+# add custom seeds to mainnet
+cat ../DNSSeedsMain.txt | while IFS= read -r line;
+do
+  if [ "${line}""X" = "X" ]
+  then
+    break
+  fi
+  sed -i "s|\\\"dnsseed.koin-project.com\\\"));|\\\"dnsseed.koin-project.com\\\"));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
+done
+
+# add custom seeds to testnet
+cat ../DNSSeedsTest.txt | while IFS= read -r line;
+do
+  if [ "${line}""X" = "X" ]
+  then
+    break
+  fi
+  sed -i "s|\\\"dnsseed-testnet.thrasher.io\\\",[[:space:]]true));|\\\"dnsseed-testnet.thrasher.io\\\" true));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
+done
+
 
 
 sed -i "s/= 9333;/= $MAINNET_PORT;/" src/chainparams.cpp
