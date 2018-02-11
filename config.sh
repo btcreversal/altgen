@@ -10,7 +10,7 @@ export DEBIAN="FALSE"
 # Whether build with gui
 export GUI="FALSE"
 # Affects 01-code.sh
-# Whether mine genesis blocks. note: when TRUE also the IF_BUILD must be TRUE
+# Whether mine genesis blocks
 export IF_GENESIS="TRUE"
 # Affects 01-code.sh
 # Whether generate genesis coinbase key stored in genesiscoinbase.pem, genesiscoinbase.hex
