@@ -23,7 +23,7 @@ Coin generation process
 
 ```bash
 sudo apt-get install git  
-git clone https://niedoluk@bitbucket.org/niedoluk/altcoingenerator.git
+git clone https://github.com/lukasniedoba/altcoingenerator
 cd altcoingenerator
 # Customize params in config.sh
 # You can customize DNSSeedNodes domains. Place them one domain per line to the DNSSeedsMain.txt file for main net and to the DNSSeedsTest.txt for testnet.
