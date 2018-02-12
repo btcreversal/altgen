@@ -33,6 +33,7 @@ install_dependencies() {
   sudo apt-get -y install libssl-dev
   sudo apt-get -y install libboost-all-dev
   sudo apt-get -y install pkg-config
+  sudo apt-get -y install python3
   #download_code
   if [ $GUI == "TRUE" ]
   then
