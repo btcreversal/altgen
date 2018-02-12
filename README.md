@@ -21,7 +21,18 @@ DNSSeedsTest.txt              | DNSSeedNodes testnet domains (one per line)
 seeds/nodes_main.txt          | SeedNodes mainnet ips:ports (one per line)
 seeds/nodes_test.txt          | SeedNodes testnet ips:ports (one per line)
 
+Graphics
+---------------------
 
+Graphics and icons are stored in the generated coins source folder named acording to the COIN_NAME you set in the config.sh file
+
+File                           | Description
+-------------------------------|------------------
+src/qt/res/about.png           | ...
+src/qt/res/bitcoin.ico         | ...
+src/qt/res/bitcoin.png         | ...
+src/qt/res/bitcoin_testnet.ico | ...
+src/qt/res/bitcoin.icns        | This could be editted with icofx
 
 Coin generation process
 ---------------------
