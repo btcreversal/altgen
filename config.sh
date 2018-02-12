@@ -8,7 +8,7 @@ export ALWAYS_MINIMUM_DIFF="FALSE"
 export DEBIAN="FALSE"
 # Affects 00-install-dependencies.sh 02-compilation.sh ... crosscompilation for windows always compile with gui
 # Whether build with gui
-export GUI="FALSE"
+export GUI="TRUE"
 # Affects 01-code.sh
 # Whether mine genesis blocks
 export IF_GENESIS="TRUE"
@@ -20,10 +20,14 @@ export IF_KEYS="TRUE"
 #******************************* COIN SETTINGS *******************************************************
 export COIN_NAME="Mycoin"
 export COIN_UNIT="MYC"
+# Link to the version used in the script
 export RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
+# Newspaper title of the day
 export PHRASE="Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible"
 export MAINNET_PORT="9133"
 export TESTNET_PORT="19135"
+# https://www.epochconverter.com/
+# Should be gradual (first mainnet, then testnet, then regtest)
 export MAINNET_GENESIS_TIMESTAMP="1516814255"
 export TEST_GENESIS_TIMESTAMP="1516831393"
 export REGTEST_GENESIS_TIMESTAMP="1516835334"
@@ -62,7 +66,9 @@ export HALVING_INTERVAL="840000"
 # validation code, the exact value of the MAX_MONEY constant is consensus
 # critical; in unusual circumstances like a(nother) overflow bug that allowed
 # for the creation of coins out of thin air modification could lead to a fork.
-export MAX_MONEY="42000001"
+#
+# Recommended to set as half of the whole coin supply
+export MAX_MONEY="42000000"
 
 # Mainnet estimated transactions per second
 export MAINNET_ESTIMATED_TRANSACTIONS="0.01"
@@ -71,6 +77,7 @@ export TEST_ESTIMATED_TRANSACTIONS="0.001"
 
 
 # http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  search for  'The Key Prefixes'
+# https://en.bitcoin.it/wiki/List_of_address_prefixes  Table of values
 # base58Prefixes[PUBKEY_ADDRESS], base58Prefixes[SCRIPT_ADDRESS], base58Prefixes[SCRIPT_ADDRESS2], base58Prefixes[SECRET_KEY]
 export base58Prefixes_PUBKEY_ADDRESS_MAIN="48"
 export base58Prefixes_SCRIPT_ADDRESS_MAIN="5"
@@ -84,14 +91,34 @@ export base58Prefixes_SECRET_KEY_TEST="239"
 
 
 
-# Key string prefixes mainnet
-# there are certain rules firs must be the same through all nets, second must be the same within the net, last two must differ
-# base58Prefixes[EXT_PUBLIC_KEY], base58Prefixes[EXT_SECRET_KEY]
+# BIP32 extended key prefixes
+# there are certain rules first two positions must be the same within the net (mainnet/testnet), the last last two positions must differ within the net
+# PUBLIC_PREFIX represents base58Prefixes[EXT_PUBLIC_KEY], PRIVATE_PREFIX represents base58Prefixes[EXT_SECRET_KEY]
 # http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  also search for  'The Key Prefixes'
-export MAIN_PREFIX_PUBLIC="(0x09)(0x44)(0xA2)(0x2E)"
-export MAIN_PREFIX_SECRET="(0x09)(0x44)(0xA1)(0xE2)"
+# https://bitcoin.stackexchange.com/questions/28380/i-want-to-generate-a-bip32-version-number-for-namecoin-and-other-altcoins
+# Valid values are: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz               .......... !!!  0 (zero), O (Capital o), l (lower case L), I (capital i) are ommited!!!!
 
-# Key string prefixes testnet
-export TEST_PREFIX_PUBLIC="(0x09)(0x33)(0x87)(0xCF)"
-export TEST_PREFIX_SECRET="(0x09)(0x33)(0x83)(0x94)"
+# EXT_SECRET_KEY, EXT_PUBLIC_KEY # Network                 : Prefixes
+# ----------------------------------------------------------------------
+# 0x0488ADE4,     0x0488B21E     # BTC  Bitcoin    mainnet : xprv / xpub
+# 0x04358394,     0x043587CF     # BTC  Bitcoin    testnet : tprv / tpub
+# 0x019D9CFE,     0x019DA462     # LTC  Litecoin   mainnet : Ltpv / Ltub
+# 0x0436EF7D,     0x0436F6E1     # LTC  Litecoin   testnet : ttpv / ttub
+# 0x02FE52F8,     0x02FE52CC     # DRK  Darkcoin   mainnet : drkv / drkp
+# 0x3A8061A0,     0x3A805837     # DRK  Darkcoin   testnet : DRKV / DRKP
+# 0x0488ADE4,     0x0488B21E     # VIA  Viacoin    mainnet : xprv / xpub
+# 0x04358394,     0x043587CF     # VIA  Viacoin    testnet : tprv / tpub
+# 0x02FD3955,     0x02FD3929     # DOGE Dogecoin   mainnet : dogv / dogp
+# 0x0488ADE4,     0x0488B21E     # VTC  Vertcoin   mainnet : vtcv / vtcp
+# 0x02CFBF60,     0x02CFBEDE     # BC   Blackcoin  mainnet : bcpv / bcpb
+# 0x03A04DB7,     0x03A04D8B     # MEC  Megacoin   mainnet : mecv / mecp
+# 0x0488ADE4,     0x0488B21E     # MYR  Myriadcoin mainnet : myrv / myrp
+# 0x0488ADE4,     0x0488B21E     # UNO  Unobtanium mainnet : unov / unop
+# 0x037A6460,     0x037A689A     # JBS  Jumbucks   mainnet : jprv / jpub
+# 0x0488ADE4,     0x0488B21E     # MZC  Mazacoin   mainnet : xprv / xpub
+
+export PUBLIC_PREFIX_MAIN="ecpb"
+export PRIVATE_PREFIX_MAIN="ecrv"
+export PUBLIC_PREFIX_TEST="tepb"
+export PRIVATE_PREFIX_TEST="terv"
 # **************************************************************************************************

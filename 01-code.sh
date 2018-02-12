@@ -32,7 +32,13 @@ REGTEST_MESSAGE_S_2=`cat magicbytes/REGTEST_MESSAGE_S_2.txt`
 REGTEST_MESSAGE_S_3=`cat magicbytes/REGTEST_MESSAGE_S_3.txt`
 
 
+# Key string prefixes mainnet extended address
+MAIN_PREFIX_PUBLIC=`./ext_address_generator.py ${PUBLIC_PREFIX_MAIN} 74`
+MAIN_PREFIX_SECRET=`./ext_address_generator.py ${PRIVATE_PREFIX_MAIN} 74`
 
+# Key string prefixes testnet extended address
+TEST_PREFIX_PUBLIC=`./ext_address_generator.py ${PUBLIC_PREFIX_TEST} 74`
+TEST_PREFIX_SECRET=`./ext_address_generator.py ${PRIVATE_PREFIX_TEST} 74`
 
 
 
@@ -414,8 +420,9 @@ sed -i "s|(456000, uint256S|//(456000, uint256S|g" src/chainparams.cpp
 sed -i "s|(638902, uint256S|//(638902, uint256S|g" src/chainparams.cpp
 sed -i "s|(721000, uint256S|//(721000, uint256S|g" src/chainparams.cpp
 #testnet
-sed -i "s|(2056, uint256S|(0, uint256S|g" src/chainparams.cpp
-sed -i "s|17748a31ba97afdc9a4f86837a39d287e3e7c7290a08a1d816c5969c78a83289|$TEST_GENESIS_HASH|g" src/chainparams.cpp
+sed -i "s|( 2056, uint256S|(0, uint256S|g" src/chainparams.cpp
+sed -i "s|\\\"17748a31ba97afdc9a4f86837a39d287e3e7c7290a08a1d816c5969c78a83289|$TEST_GENESIS_HASH|g" src/chainparams.cpp
+sed -i "s|0x17748a31ba97afdc9a4f86837a39d287e3e7c7290a08a1d816c5969c78a83289|$TEST_GENESIS_HASH|g" src/chainparams.cpp
 #regtest
 sed -i "s|530827f38f93b43ed12af0b3ad25a288dc02ed74d6d7857862df51fc56c416f9|$REGTEST_GENESIS_HASH|g" src/chainparams.cpp
 # sed -i "s||//|g" src/chainparams.cpp
