@@ -1,4 +1,4 @@
-UNIX - create custom coin
+Create custom coin
 ====================
 Description of files
 ---------------------
@@ -44,7 +44,7 @@ Next files which serves as configuration files for your coin generation (those a
 	seeds/nodes_main.txt
 	seeds/nodes_test.txt
 	seeds/chainparamsseeds.h should contain hard coded seed servers.
-  
+
 UNIX INSTALL
 ---------------------
 

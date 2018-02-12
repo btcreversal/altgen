@@ -1,2 +1,7 @@
-altcoin_generator.sh
 mycoin
+genesis/*
+magicbytes/*
+seeds/chainparamsseeds.h
+unixinstall/*
+win32install/*
+win64install/*

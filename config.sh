@@ -96,7 +96,8 @@ export base58Prefixes_SECRET_KEY_TEST="239"
 # PUBLIC_PREFIX represents base58Prefixes[EXT_PUBLIC_KEY], PRIVATE_PREFIX represents base58Prefixes[EXT_SECRET_KEY]
 # http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  also search for  'The Key Prefixes'
 # https://bitcoin.stackexchange.com/questions/28380/i-want-to-generate-a-bip32-version-number-for-namecoin-and-other-altcoins
-# Valid values are: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz               .......... !!!  0 (zero), O (Capital o), l (lower case L), I (capital i) are ommited!!!!
+# Valid values are: 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
+# !!!  0 (zero), O (Capital o), l (lower case L), I (capital i) are ommited!!!!
 
 # EXT_SECRET_KEY, EXT_PUBLIC_KEY # Network                 : Prefixes
 # ----------------------------------------------------------------------
