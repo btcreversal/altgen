@@ -1,5 +1,10 @@
 Create custom coin
 ====================
+
+This is an automated generator of a custom coin. Set of scripts described below downloads the litecoin source code and modifies it according to parameters set in configuration file. Scrypt POW algorithm is switched for the YescryptR16 and DarkGravityWave v3 is added for the purpose of difficulty computation.
+
+The best choice to run this script is Ubuntu 14.04 (Because of crosscompilation runs only with this version) but if you do not crosscompile, you can run also on Ubuntu 16.10 or Debian Jessie, but then you should switch the variable for DEBIAN in config.sh.
+
 Description of files
 ---------------------
 
@@ -7,7 +12,7 @@ File                          | Description
 ------------------------------|------------------
 config.sh                     | here you can set all desired altcoin params
 00-install-dependencies.sh    | install dependencies necessary for unix build
-01-code.sh                    | contains script for downloading and customizind the litecoin code
+01-code.sh                    | contains script for downloading and customizing the litecoin code
 02-compilation.sh             | compiles the coin for unix
 03-unixinstall.sh             | will install coin on your build computer
 04-crosscompilation.sh        | automatically grab libraries for win and crosscompiles for 32 and 64 bit
