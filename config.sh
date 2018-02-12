@@ -69,8 +69,25 @@ export MAINNET_ESTIMATED_TRANSACTIONS="0.01"
 # Testnet estimated transactions per second
 export TEST_ESTIMATED_TRANSACTIONS="0.001"
 
+
+# http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  search for  'The Key Prefixes'
+# base58Prefixes[PUBKEY_ADDRESS], base58Prefixes[SCRIPT_ADDRESS], base58Prefixes[SCRIPT_ADDRESS2], base58Prefixes[SECRET_KEY]
+export base58Prefixes_PUBKEY_ADDRESS_MAIN="48"
+export base58Prefixes_SCRIPT_ADDRESS_MAIN="5"
+export base58Prefixes_SCRIPT_ADDRESS2_MAIN="50"
+export base58Prefixes_SECRET_KEY_MAIN="176"
+
+export base58Prefixes_PUBKEY_ADDRESS_TEST="111"
+export base58Prefixes_SCRIPT_ADDRESS_TEST="196"
+export base58Prefixes_SCRIPT_ADDRESS2_TEST="58"
+export base58Prefixes_SECRET_KEY_TEST="239"
+
+
+
 # Key string prefixes mainnet
 # there are certain rules firs must be the same through all nets, second must be the same within the net, last two must differ
+# base58Prefixes[EXT_PUBLIC_KEY], base58Prefixes[EXT_SECRET_KEY]
+# http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  also search for  'The Key Prefixes'
 export MAIN_PREFIX_PUBLIC="(0x09)(0x44)(0xA2)(0x2E)"
 export MAIN_PREFIX_SECRET="(0x09)(0x44)(0xA1)(0xE2)"
 

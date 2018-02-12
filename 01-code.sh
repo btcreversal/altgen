@@ -300,6 +300,21 @@ sed -i -e 's+vSeeds.emplace_back+//vSeeds.emplace_back+g' src/chainparams.cpp
 sed -i -e 's+vSeeds.push_back+//vSeeds.push_back+g' src/chainparams.cpp
 
 
+
+#mainnet prefixes
+sed -i "s|(1,48);|(1,$base58Prefixes_PUBKEY_ADDRESS_MAIN);|g" src/chainparams.cpp
+sed -i "s|(1,5);|(1,$base58Prefixes_SCRIPT_ADDRESS_MAIN);|g" src/chainparams.cpp
+sed -i "s|(1,50);|(1,$base58Prefixes_SCRIPT_ADDRESS2_MAIN);|g" src/chainparams.cpp
+sed -i "s|(1,176);|(1,$base58Prefixes_SECRET_KEY_MAIN);|g" src/chainparams.cpp
+
+#testnet prefixes
+sed -i "s|(1,111);|(1,$base58Prefixes_PUBKEY_ADDRESS_TEST);|g" src/chainparams.cpp
+sed -i "s|(1,196);|(1,$base58Prefixes_SCRIPT_ADDRESS_TEST);|g" src/chainparams.cpp
+sed -i "s|(1,58);|(1,$base58Prefixes_SCRIPT_ADDRESS2_TEST);|g" src/chainparams.cpp
+sed -i "s|(1,239);|(1,$base58Prefixes_SECRET_KEY_TEST);|g" src/chainparams.cpp
+
+
+
 # add custom seeds to mainnet
 cat ../DNSSeedsMain.txt | while IFS= read -r line;
 do
