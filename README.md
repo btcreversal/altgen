@@ -37,6 +37,7 @@ cd altcoingenerator
 # Run:
 ./00-install-dependencies.sh
 ./01-code.sh
+# change icons and graphics for your custom stuff in the generated coinfolder/src/qt/res
 ./02-compilation.sh
 # unixinstall contains unix binaries
 # Coin code is stored in the folder with your coins name.
