@@ -70,7 +70,12 @@ If you would like to install coin on your build computer just run ./03-unixinsta
 CROSS-COMPILATION
 ---------------------
 
-	Fire up the Ubuntu 14.04
-	Grab the whole "altcoingenerator" folder with already generated custom coin or just clone, customize and run ./01-code.sh
-	Run ./04-crosscompilation.sh
-	win64install and win32install contains windows installation binaries
+1. Fire up the Ubuntu 14.04
+2. Grab the whole "altcoingenerator" folder with already generated custom coin or just clone, customize and run ./01-code.sh
+3. Run ./04-crosscompilation.sh
+4. win64install and win32install contains windows installation binaries
+
+USEFULL LINKS
+---------------------
+[Cli api call list](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
+[Running daemon overview](https://en.bitcoin.it/wiki/Running_Bitcoin)
