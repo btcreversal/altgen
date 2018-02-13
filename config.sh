@@ -70,6 +70,13 @@ export HALVING_INTERVAL="840000"
 # Recommended to set as half of the whole coin supply
 export MAX_MONEY="42000000"
 
+# How much blocks before coinbase (mined) transaction could be spent
+export COINBASE_MATURITY="100"
+
+# Block size in MB (without SegWit...). With SegWit approximately 4*MAX_BLOCK_BASE_SIZE
+# https://github.com/bitcoin/bips/blob/master/bip-0141.mediawiki
+export MAX_BLOCK_BASE_SIZE_MB="1"
+
 # Mainnet estimated transactions per second
 export MAINNET_ESTIMATED_TRANSACTIONS="0.01"
 # Testnet estimated transactions per second

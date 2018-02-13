@@ -143,6 +143,19 @@ cp ../seeds/chainparamsseeds.h src/
 sed -i -e 's+#include[[:space:]]"crypto/scrypt.h"+#include "crypto/scrypt.h"\n\nextern "C" void yescrypt_hash(const char *input, char *output);+g' src/primitives/block.cpp
 sed -i -e 's+scrypt_1024_1_1_256+yescrypt_hash+g' src/primitives/block.cpp
 
+#change block size
+MAX_BLOCK_BASE_SIZE="$(( $MAX_BLOCK_BASE_SIZE_MB * 1000000 ))"
+MAX_BLOCK_WEIGHT="$(( $MAX_BLOCK_BASE_SIZE * 4 ))"
+MAX_BLOCK_SIGOPS_COST="$(( $MAX_BLOCK_BASE_SIZE_MB * 80000 ))"
+sed -i "s|4000000;|$MAX_BLOCK_WEIGHT ;|g" src/consensus/consensus.h
+sed -i "s|1000000;|$MAX_BLOCK_BASE_SIZE ;|g" src/consensus/consensus.h
+sed -i "s|80000;|$MAX_BLOCK_SIGOPS_COST ;|g" src/consensus/consensus.h
+
+
+#change coinbase maturity
+sed -i "s|100;|$COINBASE_MATURITY ;|g" src/consensus/consensus.h
+
+
 #change genesis coinbase key
 sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9;$GENESISCOINBASEKEY;" src/chainparams.cpp
 #change mainnet alertkey
