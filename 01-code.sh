@@ -85,6 +85,14 @@ rm ${COIN_NAME_LOWER}.tar.gz
 # copy yescryptR16 files into new coin source folder
 cp -r hash ${COIN_NAME_LOWER}/src/
 
+#copy icons
+cp icons/about.png ${COIN_NAME_LOWER}/src/qt/res/icons/
+cp icons/bitcoin.ico ${COIN_NAME_LOWER}/src/qt/res/icons/
+cp icons/bitcoin.png ${COIN_NAME_LOWER}/src/qt/res/icons/
+cp icons/bitcoin_testnet.ico ${COIN_NAME_LOWER}/src/qt/res/icons/
+cp icons/bitcoin.icns ${COIN_NAME_LOWER}/src/qt/res/icons/
+
+
 # pushd $COIN_NAME
 cd ${COIN_NAME_LOWER}
 

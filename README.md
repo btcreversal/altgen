@@ -12,7 +12,7 @@ File                          | Description
 ------------------------------|------------------
 config.sh                     | here you can set all desired altcoin params
 00-install-dependencies.sh    | install dependencies necessary for unix build
-01-code.sh                    | contains script for downloading and customizing the litecoin code
+01-code.sh                    | contains script for downloading and customizing the litecoin code; (deletes) and creates COIN_NAME folder according to the last configuration in the config.sh
 02-compilation.sh             | compiles the coin for unix
 03-unixinstall.sh             | will install coin on your build computer
 04-crosscompilation.sh        | automatically grab libraries for win and crosscompiles for 32 and 64 bit
@@ -24,15 +24,15 @@ seeds/nodes_test.txt          | SeedNodes testnet ips:ports (one per line)
 Graphics
 ---------------------
 
-Graphics and icons are stored in the generated coins source folder named acording to the COIN_NAME you set in the config.sh file
+Graphics and icons are stored in the folder named "icons". Please change those files for your own.
 
 File                                   | Description
 ---------------------------------------|------------------
-src/qt/res/icons/about.png             | ...
-src/qt/res/icons/bitcoin.ico           | This could be editted with icofx
-src/qt/res/icons/bitcoin.png           | ...
-src/qt/res/icons/bitcoin_testnet.ico   | This could be editted with icofx
-src/qt/res/icons/bitcoin.icns          | This could be editted with icofx
+icons/about.png                        | ...
+icons/bitcoin.ico                      | This could be editted with icofx
+icons/bitcoin.png                      | ...
+icons/bitcoin_testnet.ico              | This could be editted with icofx
+icons/bitcoin.icns                     | This could be editted with icofx
 
 Coin generation process
 ---------------------
@@ -48,7 +48,7 @@ cd altcoingenerator
 # Run:
 ./00-install-dependencies.sh
 ./01-code.sh
-# change icons and graphics for your custom stuff in the generated coinfolder/src/qt/res
+# change icons and graphics stored in icons folder for your own
 ./02-compilation.sh
 # unixinstall contains unix binaries
 # Coin code is stored in the folder with your coins name.
