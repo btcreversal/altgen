@@ -26,13 +26,13 @@ Graphics
 
 Graphics and icons are stored in the generated coins source folder named acording to the COIN_NAME you set in the config.sh file
 
-File                           | Description
--------------------------------|------------------
-src/qt/res/about.png           | ...
-src/qt/res/bitcoin.ico         | This could be editted with icofx
-src/qt/res/bitcoin.png         | ...
-src/qt/res/bitcoin_testnet.ico | This could be editted with icofx
-src/qt/res/bitcoin.icns        | This could be editted with icofx
+File                                   | Description
+---------------------------------------|------------------
+src/qt/res/icons/about.png             | ...
+src/qt/res/icons/bitcoin.ico           | This could be editted with icofx
+src/qt/res/icons/bitcoin.png           | ...
+src/qt/res/icons/bitcoin_testnet.ico   | This could be editted with icofx
+src/qt/res/icons/bitcoin.icns          | This could be editted with icofx
 
 Coin generation process
 ---------------------

@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source config.sh
 
 COIN_NAME_LOWER=${COIN_NAME,,}
 COIN_NAME_UPPER=${COIN_NAME^^}
