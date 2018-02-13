@@ -45,10 +45,10 @@ cd altcoingenerator
 # You can customize DNSSeedNodes domains. Place them one domain per line to the DNSSeedsMain.txt file for main net and to the DNSSeedsTest.txt for testnet.
 # Also you can customize SeedNodes ips. Just place them one ip per line to the seeds/nodes_main.txt file for main net and to the seeds/nodes_test.txt for testnet
 # You just place ips and domains to the above mentioned files and script automatically generate the code
+# Change icons and graphics stored in icons folder for your own
 # Run:
 ./00-install-dependencies.sh
 ./01-code.sh
-# change icons and graphics stored in icons folder for your own
 ./02-compilation.sh
 # unixinstall contains unix binaries
 # Coin code is stored in the folder with your coins name.
