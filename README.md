@@ -77,5 +77,6 @@ CROSS-COMPILATION
 
 USEFULL LINKS
 ---------------------
-[Cli api call list](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
-[Running daemon overview](https://en.bitcoin.it/wiki/Running_Bitcoin)
+
++ [Cli api call list](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list)
++ [Running daemon overview](https://en.bitcoin.it/wiki/Running_Bitcoin)
