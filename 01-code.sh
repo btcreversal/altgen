@@ -384,13 +384,13 @@ sed -i -e "s/840000/$HALVING_INTERVAL/g" src/chainparams.cpp
 
 # change minimum chain work (whole chain)
 #mainnet
-sed -i "s/0x0000000000000000000000000000000000000000000000000000364b0cbc3568/0x00/" src/chainparams.cpp
+sed -i "s/0x000000000000000000000000000000000000000000000006805c7318ce2736c0/0x00/" src/chainparams.cpp
 #testnet
 sed -i "s/0x000000000000000000000000000000000000000000000000000000054cb9e7a0/0x00/" src/chainparams.cpp
 
 #Genesis hash mainnet
 # default assume valid
-sed -i "s/0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2/$MAIN_GENESIS_HASH/" src/chainparams.cpp
+sed -i "s/0x1673fa904a93848eca83d5ca82c7af974511a7e640e22edc2976420744f2e56a/$MAIN_GENESIS_HASH/" src/chainparams.cpp
 #asserts
 sed -i "s/0x29c8c00e1a5f446a6364a29633d3f1ee16428d87c8d3851a1c570be8170b04c2/$MAIN_GENESIS_HASH/" src/chainparams.cpp
 sed -i "s/0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9/$MAIN_MERKLE_HASH/" src/chainparams.cpp
@@ -398,7 +398,7 @@ sed -i "s/0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9/$MA
 
 #Genesis hash testnet
 # default assume valid
-sed -i "s/0xad8ff6c2f5580d2b50bd881e11312425ea84fa99f322bf132beb722f97971bba/$TEST_GENESIS_HASH/" src/chainparams.cpp
+sed -i "s/0x43a16a626ef2ffdbe928f2bc26dcd5475c6a1a04f9542dfc6a0a88e5fcf9bd4c/$TEST_GENESIS_HASH/" src/chainparams.cpp
 #asserts
 sed -i "s/0x4966625a4b2851d9fdee139e56211a0d88575f59ed816ff5e6a63deb4e3e29a0/$TEST_GENESIS_HASH/" src/chainparams.cpp
 sed -i "s/0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9/$TEST_MERKLE_HASH/" src/chainparams.cpp

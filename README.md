@@ -75,6 +75,26 @@ CROSS-COMPILATION
 3. Run ./04-crosscompilation.sh
 4. win64install and win32install contains windows installation binaries
 
+CONFIGURATION-FILE
+---------------------
+
+If you are running your coin on linux without GUI wallet and want to use solo mining or coin-cli you should configure at least your username and password for the rpc calls. Minimum you should provide follows
+
+	rpcuser=myusername
+	rpcpassword=YourWeryStrongPasswordAFASERGASDFSAWaewfa34
+	rpcport=9999
+
+You can add the daemon=1 which will run coind as daemon by default without -daemon parameter
+
+CPU miner
+---------------------
+
+Run on localhost when daemon configured like above. Change to your username, password and wallet address
+
+```
+./cpuminer -a yescryptr16 -o http://127.0.0.1:9999 -u myusername -p YourWeryStrongPasswordAFASERGASDFSAWaewfa34 --coinbase-addr=EVTBc1s56yXXWLaZbUp2W3bdEbHpxhfvc4
+```
+
 USEFULL LINKS
 ---------------------
 
