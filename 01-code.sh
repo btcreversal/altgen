@@ -378,6 +378,7 @@ sed -i "s/1296688602/$REGTEST_GENESIS_TIMESTAMP/" src/chainparams.cpp
 
 sed -i -e "s/0x1e0ffff0/$NBITS/g" src/chainparams.cpp
 sed -i -e "s/50 \* COIN/$GENESIS_REWARD/g" src/chainparams.cpp
+sed -i -e "s/50 \* COIN/$GENESIS_REWARD/g" src/validation.cpp
 sed -i -e "s/2.5 \* 60/$POW_TARGET_SPACING/g" src/chainparams.cpp
 sed -i -e "s/840000/$HALVING_INTERVAL/g" src/chainparams.cpp
 
