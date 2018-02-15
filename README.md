@@ -80,14 +80,16 @@ CONFIGURATION-FILE
 
 If you are running your coin on linux without GUI wallet and want to use solo mining or coin-cli you should configure at least your username and password for the rpc calls. Minimum you should provide follows
 
-## The location of the coin config files. Suppose your coin
+The location of the coin config files. Suppose your coin:
 + Windows XP C:\Documents and Settings\<username>\Application Data\Elicoin\elicoin.conf
 + Windows Vista, 7, 10 C:\Users\<username>\AppData\Roaming\Elicoin
 + Linux /home/<username>/.elicoin/elicoin.conf     
 
-	rpcuser=myusername
-	rpcpassword=YourWeryStrongPasswordAFASERGASDFSAWaewfa34
-	rpcport=9999
+```
+rpcuser=myusername
+rpcpassword=YourWeryStrongPasswordAFASERGASDFSAWaewfa34
+rpcport=9999
+```
 
 You can add the daemon=1 which will run coind as daemon by default without -daemon parameter
 
