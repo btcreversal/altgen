@@ -18,6 +18,12 @@ export IF_KEYS="TRUE"
 #*****************************************************************************************************
 
 #******************************* COIN SETTINGS *******************************************************
+# Change stuff from about
+export COIN_GITHUB="https://github.com/elicoin/elicoin"
+export URL_WEBSITE="https://elicoin.net"
+export FROM_YEAR="2017"
+export TO_YEAR="2018"
+
 export COIN_NAME="Mycoin"
 export COIN_UNIT="MYC"
 # Link to the version used in the script
@@ -52,7 +58,7 @@ export MIN_DIFF="000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 export POW_TARGET_SPACING="2.5 * 60"
 # Genesis reward
 # must be exactly this format "x * COIN"
-export GENESIS_REWARD="50 * COIN"
+export GENESIS_REWARD="10 * COIN"
 
 # https://en.bitcoin.it/wiki/Controlled_supply
 export HALVING_INTERVAL="840000"

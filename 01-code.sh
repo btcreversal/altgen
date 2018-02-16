@@ -121,6 +121,13 @@ for i in $(find . -type f | grep -v "^./.git"); do
     sed -i "s/LTC/$COIN_UNIT/g" $i
 done
 
+# export COIN_GITHUB="https://github.com/elicoin/elicoin"
+# export URL_WEBSITE="https://elicoin.net"
+sed -i "/std::string[[:space:]]URL_SOURCE_CODE/c\    const std::string URL_SOURCE_CODE = \"<$COIN_GITHUB>\";" src/init.cpp
+sed -i "/std::string[[:space:]]URL_WEBSITE/c\    const std::string URL_WEBSITE = \"<$URL_WEBSITE>\";" src/init.cpp
+sed -i "s/2011/$FROM_YEAR/" src/init.cpp
+sed -i "/define[[:space:]]COPYRIGHT_YEAR/c\#define COPYRIGHT_YEAR $TO_YEAR" src/clientversion.h
+
 sed -i "s/84000000/$MAX_MONEY/" src/amount.h
 
 # add yescryptR16 sources to autogen makefile
