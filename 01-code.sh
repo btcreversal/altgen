@@ -121,18 +121,18 @@ for i in $(find . -type f | grep -v "^./.git"); do
     sed -i "s/LTC/$COIN_UNIT/g" $i
 done
 
-# export COIN_GITHUB="https://github.com/elicoin/elicoin"
-# export URL_WEBSITE="https://elicoin.net"
 sed -i "/std::string[[:space:]]URL_SOURCE_CODE/c\    const std::string URL_SOURCE_CODE = \"<$COIN_GITHUB>\";" src/init.cpp
 sed -i "/std::string[[:space:]]URL_WEBSITE/c\    const std::string URL_WEBSITE = \"<$URL_WEBSITE>\";" src/init.cpp
-sed -i "s/2011/$FROM_YEAR/" src/init.cpp
-#define PACKAGE_URL "https://mycoin.org/"
 
-# sed -i "/define[[:space:]]PACKAGE_URL/c\#define PACKAGE_URL \"$URL_WEBSITE\"" src/config/bitcoin-config.h
-#define QAPP_ORG_DOMAIN "mycoin.org"
+sed -i "s/2011/$FROM_YEAR/" src/init.cpp
+sed -i "s/2011/$FROM_YEAR/" src/util.cpp
+sed -i "s/2011/$FROM_YEAR/" src/qt/splashscreen.cpp
+
 sed -i "/define[[:space:]]QAPP_ORG_DOMAIN/c\#define QAPP_ORG_DOMAIN \"$COIN_DOMAIN\"" src/qt/guiconstants.h
 
 sed -i "/define[[:space:]]COPYRIGHT_YEAR/c\#define COPYRIGHT_YEAR $TO_YEAR" src/clientversion.h
+
+sed -i "/define(_COPYRIGHT_YEAR,[[:space:]]2017)/c\define(_COPYRIGHT_YEAR, $TO_YEAR)" configure.ac
 
 sed -i "s/84000000/$MAX_MONEY/" src/amount.h
 
@@ -406,7 +406,7 @@ sed -i "s/0x000000000000000000000000000000000000000000000000000000054cb9e7a0/0x0
 # default assume valid
 sed -i "s/0x1673fa904a93848eca83d5ca82c7af974511a7e640e22edc2976420744f2e56a/$MAIN_GENESIS_HASH/" src/chainparams.cpp
 #asserts
-sed -i "s/0x29c8c00e1a5f446a6364a29633d3f1ee16428d87c8d3851a1c570be8170b04c2/$MAIN_GENESIS_HASH/" src/chainparams.cpp
+sed -i "s/0x12a765e31ffd4059bada1e25190f6e98c99d9714d334efa41a195a7e7e04bfe2/$MAIN_GENESIS_HASH/" src/chainparams.cpp
 sed -i "s/0x97ddfbbae6be97fd6cdf3e7ca13232a3afff2353e29badfab7f73011edd4ced9/$MAIN_MERKLE_HASH/" src/chainparams.cpp
 
 

@@ -1,3 +1,6 @@
+Block explorer installation
+====================
+
 # Install dependencies
 
 ```bash
@@ -66,4 +69,10 @@ Edit settings.json
 ```bash
 # Go to the explorer folder and run like this
 npm start
+```
+
+Or use screen. Suppose you placed explorer folder into /root/explorer
+
+```bash
+screen -dm bash -c "cd /root/explorer/ && npm start"
 ```
