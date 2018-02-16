@@ -126,6 +126,12 @@ done
 sed -i "/std::string[[:space:]]URL_SOURCE_CODE/c\    const std::string URL_SOURCE_CODE = \"<$COIN_GITHUB>\";" src/init.cpp
 sed -i "/std::string[[:space:]]URL_WEBSITE/c\    const std::string URL_WEBSITE = \"<$URL_WEBSITE>\";" src/init.cpp
 sed -i "s/2011/$FROM_YEAR/" src/init.cpp
+#define PACKAGE_URL "https://mycoin.org/"
+
+# sed -i "/define[[:space:]]PACKAGE_URL/c\#define PACKAGE_URL \"$URL_WEBSITE\"" src/config/bitcoin-config.h
+#define QAPP_ORG_DOMAIN "mycoin.org"
+sed -i "/define[[:space:]]QAPP_ORG_DOMAIN/c\#define QAPP_ORG_DOMAIN \"$COIN_DOMAIN\"" src/qt/guiconstants.h
+
 sed -i "/define[[:space:]]COPYRIGHT_YEAR/c\#define COPYRIGHT_YEAR $TO_YEAR" src/clientversion.h
 
 sed -i "s/84000000/$MAX_MONEY/" src/amount.h

@@ -23,6 +23,7 @@ export COIN_GITHUB="https://github.com/elicoin/elicoin"
 export URL_WEBSITE="https://elicoin.net"
 export FROM_YEAR="2017"
 export TO_YEAR="2018"
+export COIN_DOMAIN="elicoin.net"
 
 export COIN_NAME="Mycoin"
 export COIN_UNIT="MYC"
