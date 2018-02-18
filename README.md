@@ -18,6 +18,8 @@ config.sh                     | here you can set all desired altcoin params
 04-crosscompilation.sh        | automatically grab libraries for win and crosscompiles for 32 and 64 bit
 DNSSeedsMain.txt              | DNSSeedNodes mainnet domains (one per line)
 DNSSeedsTest.txt              | DNSSeedNodes testnet domains (one per line)
+DomainSeedsMain.txt           | SeedNodes mainnet domains (one per line, after start of the daemon those domains are resolved to ips)
+DomainSeedsTest.txt           | SeedNodes testnet domains (one per line, after start of the daemon those domains are resolved to ips)
 seeds/nodes_main.txt          | SeedNodes mainnet ips:ports (one per line)
 seeds/nodes_test.txt          | SeedNodes testnet ips:ports (one per line)
 
@@ -44,6 +46,7 @@ cd altcoingenerator
 # Customize params in config.sh
 # You can customize DNSSeedNodes domains. Place them one domain per line to the DNSSeedsMain.txt file for main net and to the DNSSeedsTest.txt for testnet.
 # Also you can customize SeedNodes ips. Just place them one ip per line to the seeds/nodes_main.txt file for main net and to the seeds/nodes_test.txt for testnet
+# And finally you can customize SeedNodes domains. Just place them one domain per line to the DomainSeedsMain.txt file for main net and to the DomainSeedsTest.txt for testnet
 # You just place ips and domains to the above mentioned files and script automatically generate the code
 # Change icons and graphics stored in icons folder for your own
 # Run:

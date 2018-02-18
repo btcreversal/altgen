@@ -371,26 +371,45 @@ sed -i "s|(1,239);|(1,$base58Prefixes_SECRET_KEY_TEST);|g" src/chainparams.cpp
 
 
 
-# add custom seeds to mainnet
+# add custom DNS seeds to mainnet
 cat ../DNSSeedsMain.txt | while IFS= read -r line;
 do
   if [ "${line}""X" = "X" ]
   then
     break
   fi
-  sed -i "s|ARRAYLEN(pnSeed6_main));|ARRAYLEN(pnSeed6_main));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
   sed -i "s|\\\"dnsseed.koin-project.com\\\"));|\\\"dnsseed.koin-project.com\\\"));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
 done
 
-# add custom seeds to testnet
+# add custom DNS seeds to testnet
 cat ../DNSSeedsTest.txt | while IFS= read -r line;
 do
   if [ "${line}""X" = "X" ]
   then
     break
   fi
-  sed -i "s|ARRAYLEN(pnSeed6_test));|ARRAYLEN(pnSeed6_test));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
   sed -i "s|\\\"dnsseed-testnet.thrasher.io\\\",[[:space:]]true));|\\\"dnsseed-testnet.thrasher.io\\\", true));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
+done
+
+
+# add custom seed nodes to mainnet
+cat ../DomainSeedsMain.txt | while IFS= read -r line;
+do
+  if [ "${line}""X" = "X" ]
+  then
+    break
+  fi
+  sed -i "s|ARRAYLEN(pnSeed6_main));|ARRAYLEN(pnSeed6_main));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
+done
+
+# add custom seed nodes to testnet
+cat ../DomainSeedsTest.txt | while IFS= read -r line;
+do
+  if [ "${line}""X" = "X" ]
+  then
+    break
+  fi
+  sed -i "s|ARRAYLEN(pnSeed6_test));|ARRAYLEN(pnSeed6_test));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
 done
 
 

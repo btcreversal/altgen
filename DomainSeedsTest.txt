@@ -1,0 +1,3 @@
+seed1.elicoin.net
+seed2.elicoin.net
+seed3.elicoin.net
