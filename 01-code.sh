@@ -176,6 +176,7 @@ sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4
 #change testnet alertkey
 # sed -i "s;040184710fa689ad5023690c80f3a49c8f13f8d45b8c857fbcbc8bc4a8e4d3eb4b10f4d4604fa08dce601aaf0f470216fe1b51850b4acf21b179c45070ac7b03a9;$TESTALERTKEY;" src/chainparams.cpp
 
+sed -i -e 's+#include[[:space:]]"chainparamsseeds.h"+#include "chainparamsseeds.h"\n#include "netbase.h"\n\n\nSeedSpec6 lookupDomain(const char *name,int port);\n+g' src/chainparams.cpp
 #add mining code
 if [ $IF_GENESIS == "TRUE" ]
 then
@@ -277,6 +278,21 @@ else
   echo " "
 fi
 
+# add seed domain resolve method
+echo '' >> src/chainparams.cpp
+echo '' >> src/chainparams.cpp
+echo 'SeedSpec6 lookupDomain(const char *name,int port){' >> src/chainparams.cpp
+echo '  SeedSpec6 addrseed;' >> src/chainparams.cpp
+echo '  CNetAddr addrss;' >> src/chainparams.cpp
+echo '  LookupHost(name,addrss, true);' >> src/chainparams.cpp
+echo '  for(int i = 0; i < 16;i++){' >> src/chainparams.cpp
+echo '    addrseed.addr[15-i] = addrss.GetByte(i);' >> src/chainparams.cpp
+echo '  }' >> src/chainparams.cpp
+echo '  addrseed.port = port;' >> src/chainparams.cpp
+echo '  return addrseed;' >> src/chainparams.cpp
+echo '}' >> src/chainparams.cpp
+echo '' >> src/chainparams.cpp
+
 # add DarkGravityWave v3 support
 sed -i -e 's+#include[[:space:]]"util.h"+#include "util.h"\n\nunsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params\& params);+g' src/pow.cpp
 sed -i -e 's+unsigned[[:space:]]int[[:space:]]nProofOfWorkLimit[[:space:]]=[[:space:]]UintToArith256(params.powLimit).GetCompact();+return DarkGravityWave(pindexLast,params);\n    unsigned int nProofOfWorkLimit = UintToArith256(params.powLimit).GetCompact();+g' src/pow.cpp
@@ -362,6 +378,7 @@ do
   then
     break
   fi
+  sed -i "s|ARRAYLEN(pnSeed6_main));|ARRAYLEN(pnSeed6_main));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
   sed -i "s|\\\"dnsseed.koin-project.com\\\"));|\\\"dnsseed.koin-project.com\\\"));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
 done
 
@@ -372,6 +389,7 @@ do
   then
     break
   fi
+  sed -i "s|ARRAYLEN(pnSeed6_test));|ARRAYLEN(pnSeed6_test));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
   sed -i "s|\\\"dnsseed-testnet.thrasher.io\\\",[[:space:]]true));|\\\"dnsseed-testnet.thrasher.io\\\" true));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
 done
 
