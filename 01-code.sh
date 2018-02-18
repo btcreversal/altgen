@@ -390,7 +390,7 @@ do
     break
   fi
   sed -i "s|ARRAYLEN(pnSeed6_test));|ARRAYLEN(pnSeed6_test));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
-  sed -i "s|\\\"dnsseed-testnet.thrasher.io\\\",[[:space:]]true));|\\\"dnsseed-testnet.thrasher.io\\\" true));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
+  sed -i "s|\\\"dnsseed-testnet.thrasher.io\\\",[[:space:]]true));|\\\"dnsseed-testnet.thrasher.io\\\", true));\n        vSeeds.push_back(CDNSSeedData(\\\"${line}\\\", \\\"${line}\\\"));|" src/chainparams.cpp
 done
 
 
