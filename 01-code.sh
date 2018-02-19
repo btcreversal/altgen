@@ -147,7 +147,8 @@ echo 'endif' >> src/Makefile.am
 
 # deactivate chain control
 sed -i -e 's#// Once this function has returned false, it must remain false.#return false;\n    // Once this function has returned false, it must remain false.#g' src/validation.cpp
-sed -i -e 's#if[[:space:]](nHeight[[:space:]]>=[[:space:]]consensusParams.BIP34Height)#//if (nHeight >= consensusParams.BIP34Height)\n    if(false)#g' src/validation.cpp
+sed -i -e 's#if[[:space:]](nHeight[[:space:]]>=[[:space:]]consensusParams.BIP34Height)#if (nHeight >= consensusParams.BIP34Height \&\& nHeight >= 1500)#g' src/validation.cpp
+# sed -i -e 's#if[[:space:]](nHeight[[:space:]]>=[[:space:]]consensusParams.BIP34Height)#//if (nHeight >= consensusParams.BIP34Height)\n    if(false)#g' src/validation.cpp
 
 #copy seeds file
 cp ../seeds/chainparamsseeds.h src/
@@ -160,9 +161,13 @@ sed -i -e 's+scrypt_1024_1_1_256+yescrypt_hash+g' src/primitives/block.cpp
 MAX_BLOCK_BASE_SIZE="$(( $MAX_BLOCK_BASE_SIZE_MB * 1000000 ))"
 MAX_BLOCK_WEIGHT="$(( $MAX_BLOCK_BASE_SIZE * 4 ))"
 MAX_BLOCK_SIGOPS_COST="$(( $MAX_BLOCK_BASE_SIZE_MB * 80000 ))"
+DEFAULT_BLOCK_MAX_SIZE="$(( $MAX_BLOCK_BASE_SIZE_MB * 750000 ))"
+DEFAULT_BLOCK_MAX_WEIGHT="$(( $MAX_BLOCK_BASE_SIZE_MB * 3000000 ))"
 sed -i "s|4000000;|$MAX_BLOCK_WEIGHT ;|g" src/consensus/consensus.h
 sed -i "s|1000000;|$MAX_BLOCK_BASE_SIZE ;|g" src/consensus/consensus.h
 sed -i "s|80000;|$MAX_BLOCK_SIGOPS_COST ;|g" src/consensus/consensus.h
+sed -i "s|750000;|$DEFAULT_BLOCK_MAX_SIZE ;|g" src/policy/policy.h
+sed -i "s|3000000;|$DEFAULT_BLOCK_MAX_WEIGHT ;|g" src/policy/policy.h
 
 
 #change coinbase maturity
