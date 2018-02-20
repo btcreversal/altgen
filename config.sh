@@ -39,6 +39,10 @@ export MAINNET_GENESIS_TIMESTAMP="1516814255"
 export TEST_GENESIS_TIMESTAMP="1516831393"
 export REGTEST_GENESIS_TIMESTAMP="1516835334"
 
+# Deployment time deadline of BIP68, BIP112, and BIP113 and SegWit (BIP141, BIP143, and BIP147)
+# Is set ot MAINNET_GENESIS_TIMESTAMP + 34 days
+export DEPLOYMENT_CSV_SEGWIT="$(( $MAINNET_GENESIS_TIMESTAMP + 3000000 ))"
+
 # Minimum fee .... Amount which you can send can`t be smaller than that [Satoshis]
 export MIN_FEE="0"
 
