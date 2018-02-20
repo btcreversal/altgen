@@ -178,7 +178,7 @@ sed -i "s|100000;|$MIN_FEE ;|g" src/wallet/wallet.h
 sed -i "s|2000000;|$MIN_FEE ;|g" src/wallet/wallet.h
 
 # change deploument dates
-sed -i "s|1517356801|$DEPLOYMENT_CSV_SEGWIT|g" src/chainparams.cpp
+# sed -i "s|1517356801|$DEPLOYMENT_CSV_SEGWIT|g" src/chainparams.cpp
 
 #change coinbase maturity
 sed -i "s|100;|$COINBASE_MATURITY ;|g" src/consensus/consensus.h
