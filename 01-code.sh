@@ -170,6 +170,15 @@ sed -i "s|750000;|$DEFAULT_BLOCK_MAX_SIZE ;|g" src/policy/policy.h
 sed -i "s|3000000;|$DEFAULT_BLOCK_MAX_WEIGHT ;|g" src/policy/policy.h
 
 
+# change nFees
+sed -i "s|100000;|$MIN_FEE ;|g" src/policy/policy.h
+sed -i "s|1000;|$MIN_FEE ;|g" src/policy/policy.h
+sed -i "s|=[[:space:]]100000;|= $MIN_FEE ;|g" src/validation.h
+sed -i "s|100000;|$MIN_FEE ;|g" src/wallet/wallet.h
+sed -i "s|2000000;|$MIN_FEE ;|g" src/wallet/wallet.h
+
+
+
 #change coinbase maturity
 sed -i "s|100;|$COINBASE_MATURITY ;|g" src/consensus/consensus.h
 

@@ -39,6 +39,9 @@ export MAINNET_GENESIS_TIMESTAMP="1516814255"
 export TEST_GENESIS_TIMESTAMP="1516831393"
 export REGTEST_GENESIS_TIMESTAMP="1516835334"
 
+# Minimum fee .... Amount which you can send can`t be smaller than that [Satoshis]
+export MIN_FEE="0"
+
 # Genesis block difficulty
 # Note NBITS is in short difficulty encoding
 # https://bitcoin.stackexchange.com/questions/30467/what-are-the-equations-to-convert-between-bits-and-difficulty
