@@ -414,7 +414,8 @@ do
   then
     break
   fi
-  sed -i "s|ARRAYLEN(pnSeed6_main));|ARRAYLEN(pnSeed6_main));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
+  sed -i "s|SetRPCWarmupFinished();|connman.AddNode(\\\"${line}\\\");\n    SetRPCWarmupFinished();|" src/init.cpp
+  # sed -i "s|ARRAYLEN(pnSeed6_main));|ARRAYLEN(pnSeed6_main));\n        vFixedSeeds.push_back(lookupDomain(\\\"${line}\\\",nDefaultPort));|" src/chainparams.cpp
 done
 
 # add custom seed nodes to testnet
