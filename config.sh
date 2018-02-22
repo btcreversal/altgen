@@ -45,6 +45,7 @@ export REGTEST_GENESIS_TIMESTAMP="1516835334"
 
 # Minimum fee .... Amount which you can send can`t be smaller than that [Satoshis]
 export MIN_FEE="0"
+# Recommended fee [Satoshis]
 export DEFAULT_FALLBACK_FEE="2000000"
 
 # Genesis block difficulty
