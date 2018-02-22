@@ -27,7 +27,7 @@ GRANT ALL ON coinium TO 'root'@'localhost' WITH GRANT OPTION;
 
 Install Redis memory database
 
-[https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis)
+[Redis install](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis)
 
 Build Coinium
 
