@@ -175,7 +175,7 @@ sed -i "s|100000;|$MIN_FEE ;|g" src/policy/policy.h
 sed -i "s|1000;|$MIN_FEE ;|g" src/policy/policy.h
 sed -i "s|=[[:space:]]100000;|= $MIN_FEE ;|g" src/validation.h
 sed -i "s|100000;|$MIN_FEE ;|g" src/wallet/wallet.h
-sed -i "s|2000000;|$MIN_FEE ;|g" src/wallet/wallet.h
+sed -i "s|2000000;|$DEFAULT_FALLBACK_FEE ;|g" src/wallet/wallet.h
 
 # change deploument dates
 # sed -i "s|1517356801|$DEPLOYMENT_CSV_SEGWIT|g" src/chainparams.cpp
