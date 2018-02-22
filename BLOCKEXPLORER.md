@@ -13,16 +13,16 @@ apt-get install -y build-essential
 Must be version 2.6.3
 
 ```bash
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
-echo 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-sudo apt-get update
+apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+echo 'deb http://downloads-distro.mongodb.org/repo/debian-sysvinit dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
+apt-get update
 apt-get install mongodb-org=2.6.3 mongodb-org-server=2.6.3 mongodb-org-shell=2.6.3 mongodb-org-mongos=2.6.3 mongodb-org-tools=2.6.3
 # Lock this version, do not update
-echo "mongodb-org hold" | sudo dpkg --set-selections
-echo "mongodb-org-server hold" | sudo dpkg --set-selections
-echo "mongodb-org-shell hold" | sudo dpkg --set-selections
-echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
-echo "mongodb-org-tools hold" | sudo dpkg --set-selections
+echo "mongodb-org hold" | dpkg --set-selections
+echo "mongodb-org-server hold" | dpkg --set-selections
+echo "mongodb-org-shell hold" | dpkg --set-selections
+echo "mongodb-org-mongos hold" | dpkg --set-selections
+echo "mongodb-org-tools hold" | dpkg --set-selections
 # Start mongodb service
 service mongod start
 ```

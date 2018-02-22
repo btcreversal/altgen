@@ -4,7 +4,7 @@ Mining pool installation
 # Install mono
 
 Look at this link or if you are on Ubuntu 14.04, just follow steps below
-[http://www.mono-project.com/download/stable/](Mono download)
+[Mono download](http://www.mono-project.com/download/stable/)
 
 ```bash
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
@@ -14,7 +14,7 @@ sudo apt-get install mono-devel mono-complete mono-dbg referenceassemblies-pcl m
 ```
 
 Install mysql and set up privileges. Suppose the user is root.
-[https://linode.com/docs/databases/mysql/how-to-install-mysql-on-debian-7/](Mysql installation example)
+[Mysql installation example](https://linode.com/docs/databases/mysql/how-to-install-mysql-on-debian-7/)
 
 ```bash
 mysql -u root -p
@@ -27,7 +27,7 @@ GRANT ALL ON coinium TO 'root'@'localhost' WITH GRANT OPTION;
 
 Install Redis memory database
 
-[https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis](Redis install)
+[https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis)
 
 Build Coinium
 
@@ -39,4 +39,4 @@ xbuild CoiniumServ.sln /p:Configuration="Release"
 cp src/CoiniumServ/Algorithms/Implementations/libyescrypt.so build/bin/Release
 ```
 Configure coinium
-[https://github.com/bonesoul/CoiniumServ/wiki/Configuration](Configure coinium)
+[Configure coinium](https://github.com/bonesoul/CoiniumServ/wiki/Configuration)
