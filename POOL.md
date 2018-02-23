@@ -74,6 +74,7 @@ coiniumservyescrypt/build/bin/Release/config/coins/elicoin.json         | Coin c
 
 
 + Running
-```
+```bash
 cd coiniumservyescrypt/build/bin
 mono CoiniumServ.exe
+```
