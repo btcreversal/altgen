@@ -62,8 +62,8 @@ nuget restore
 xbuild CoiniumServ.sln /p:Configuration="Release"
 cp src/CoiniumServ/Algorithms/Implementations/libyescrypt.so build/bin/Release
 ```
-+ [Configure coinium](https://github.com/bonesoul/CoiniumServ/wiki/Configuration)
-+ Configure coinium
++ [Configure coinium help](https://github.com/bonesoul/CoiniumServ/wiki/Configuration)
++ Configure coinium filed:
 
 Config file                                                             | Description                                                          | Link
 ------------------------------------------------------------------------|----------------------------------------------------------------------|------------------
