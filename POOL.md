@@ -57,8 +57,6 @@ cd ~
 apt-get -y install git
 apt-get -y install nuget
 git clone https://niedoluk@bitbucket.org/niedoluk/coiniumservyescrypt.git
-# git clone https://github.com/lukasniedoba/CoiniumServ.git
-# cd CoiniumServ
 cd coiniumservyescrypt/
 nuget restore
 xbuild CoiniumServ.sln /p:Configuration="Release"
