@@ -1,0 +1,29 @@
+{
+    "enabled": true,
+    "coin": "elicoin.json",
+    "daemon": {
+        "port": 9999,
+        "username": "myusername",
+        "password": "YourWeryStrongPasswordAFASERGASDFSAWaewfa34"
+    },
+    "wallet": {
+        "address": "EQtmTZjr3A37gY26JgNueA1hCEE5TJC1NZ"
+    },
+    "rewards": [
+        {
+            "EdRyvmjuttPvfNX34vMJZPRfeqtVu7gqav": 1
+        }
+    ],
+    "stratum": {
+        "port": 3333
+    },
+    "storage": {
+        "hybrid": {
+          "mysql": {
+            "database": "coinium",
+            "username": "root",
+            "password": ""
+          }
+        }
+    }
+}

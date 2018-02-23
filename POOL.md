@@ -27,10 +27,10 @@ apt-get -y install mono-devel mono-complete mono-dbg referenceassemblies-pcl mon
 apt-get -y install mysql-server
 mysql -u root -p
 # set following
-CREATE DATABASE coinium;
-GRANT ALL PRIVILEGES ON coinium.* TO 'root'@'localhost' WITH GRANT OPTION;
-GRANT ALL ON coinium.* TO 'root'@'localhost' WITH GRANT OPTION;
-exit
+> CREATE DATABASE coinium;
+> GRANT ALL PRIVILEGES ON coinium.* TO 'root'@'localhost' WITH GRANT OPTION;
+> GRANT ALL ON coinium.* TO 'root'@'localhost' WITH GRANT OPTION;
+> exit
 ```
 
 + [Redis install](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-redis)
@@ -66,3 +66,10 @@ cp src/CoiniumServ/Algorithms/Implementations/libyescrypt.so build/bin/Release
 ```
 + [Configure coinium](https://github.com/bonesoul/CoiniumServ/wiki/Configuration)
 + Configure coinium
+
+Config file                                                             | Description                                                          | Link
+------------------------------------------------------------------------|----------------------------------------------------------------------|------------------
+coiniumservyescrypt/build/bin/Release/config/config.json                | General config file                                                  | a
+coiniumservyescrypt/build/bin/Release/config/pools/default.json         | Main pool config                                                     | b
+coiniumservyescrypt/build/bin/Release/config/pools/pool.json            | Per pool config file (there could be more pools)                     | c
+coiniumservyescrypt/build/bin/Release/config/coins/elicoin.json         | Coin confuguration file. You must create this file                   | d
