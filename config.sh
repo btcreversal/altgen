@@ -1,20 +1,15 @@
 #!/bin/bash
 
 #******************************************** SCRIPT SETTINGS ***************************************
+# This variable affects 02-generate-code.sh step
 # Ovverrides difficulty compute algorithm and always return lowest limit (Just for test purposes. Please do not set this parameter to TRUE if you do not know what are you doing.)
 export ALWAYS_MINIMUM_DIFF="FALSE"
-# Affects 00-install-dependencies.sh and 02-compilation.sh
+# This variable affects 00-install-dependencies.sh and 03-compilation.sh steps
 # Whether building on debian->TRUE or on ubuntu->FALSE
 export DEBIAN="FALSE"
-# Affects 00-install-dependencies.sh 02-compilation.sh ... crosscompilation for windows always compile with gui
+# This variable affects 00-install-dependencies.sh and 03-compilation.sh steps ... crosscompilation for windows always compile with gui
 # Whether build with gui
 export GUI="TRUE"
-# Affects 01-code.sh
-# Whether mine genesis blocks
-export IF_GENESIS="FALSE"
-# Affects 01-code.sh
-# Whether generate genesis coinbase key stored in genesiscoinbase.pem, genesiscoinbase.hex
-export IF_KEYS="FALSE"
 #*****************************************************************************************************
 
 #******************************* COIN SETTINGS *******************************************************

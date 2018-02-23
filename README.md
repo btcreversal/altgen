@@ -12,10 +12,11 @@ File                          | Description
 ------------------------------|------------------
 config.sh                     | here you can set all desired altcoin params
 00-install-dependencies.sh    | install dependencies necessary for unix build
-01-code.sh                    | contains script for downloading and customizing the litecoin code; (deletes) and creates COIN_NAME folder according to the last configuration in the config.sh
-02-compilation.sh             | compiles the coin for unix
-03-unixinstall.sh             | will install coin on your build computer
-04-crosscompilation.sh        | automatically grab libraries for win and crosscompiles for 32 and 64 bit
+01-mine-genesis.sh            | contains script for mining the genesis block according to the last configuration in the config.sh. !!! Please NOTE that this step overwrites and removes your coin folder if it is already generated!!!
+02-generate-code.sh           | contains script for downloading and customizing the litecoin code; (deletes) and creates COIN_NAME folder according to the last configuration in the config.sh
+03-compilation.sh             | compiles the coin for unix
+04-unixinstall.sh             | will install coin on your build computer
+05-crosscompilation.sh        | automatically grab libraries for the Windows and crosscompiles coin for 32 and 64 bit
 DNSSeedsMain.txt              | DNSSeedNodes mainnet domains (one per line)
 DNSSeedsTest.txt              | DNSSeedNodes testnet domains (one per line)
 DomainSeedsMain.txt           | SeedNodes mainnet domains (one per line, after start of the daemon those domains are resolved to ips)
@@ -51,8 +52,10 @@ cd altcoingenerator
 # Change icons and graphics stored in icons folder for your own
 # Run:
 ./00-install-dependencies.sh
-./01-code.sh
-./02-compilation.sh
+./01-mine-genesis.sh
+./02-generate-code.sh
+# Now you can save your code to the Github
+./03-compilation.sh
 # unixinstall contains unix binaries
 # Coin code is stored in the folder with your coins name.
 ```
@@ -68,14 +71,14 @@ Next files which serves as configuration files for your coin generation (those a
 UNIX INSTALL
 ---------------------
 
-If you would like to install coin on your build computer just run ./03-unixinstall.sh
+If you would like to install coin on your build computer just run ./04-unixinstall.sh
 
 CROSS-COMPILATION
 ---------------------
 
 1. Fire up the Ubuntu 14.04
 2. Grab the whole "altcoingenerator" folder with already generated custom coin or just clone, customize and run ./01-code.sh
-3. Run ./04-crosscompilation.sh
+3. Run ./05-crosscompilation.sh
 4. win64install and win32install contains windows installation binaries
 
 CONFIGURATION-FILE

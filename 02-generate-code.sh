@@ -4,11 +4,13 @@ cd seeds
 python3 generate-seeds.py ./ > chainparamsseeds.h
 cd ..
 
-if [ "$1" = "-nogenesis" ]; then
+if [ "$1" = "-genesis" ]; then
   source config.sh
+  IF_GENESIS="TRUE"
+  IF_KEYS="TRUE"
+else
   IF_GENESIS="FALSE"
   IF_KEYS="FALSE"
-else
   source config.sh
 fi
 # Message start strings (magic bytes)

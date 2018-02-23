@@ -1,9 +1,6 @@
 #!/bin/bash
 source config.sh
 
-COIN_NAME_LOWER=${COIN_NAME,,}
-COIN_NAME_UPPER=${COIN_NAME^^}
-
 
 installdb_debian() {
   wget https://raw.githubusercontent.com/bitcoin/bitcoin/master/contrib/install_db4.sh
