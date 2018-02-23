@@ -71,3 +71,9 @@ coiniumservyescrypt/build/bin/Release/config/config.json                | Genera
 coiniumservyescrypt/build/bin/Release/config/pools/default.json         | Main pool config                                                     | [default.json](https://raw.githubusercontent.com/lukasniedoba/altcoingenerator/master/configpoolexamples/pools/default.json)
 coiniumservyescrypt/build/bin/Release/config/pools/pool.json            | Per pool config file (there could be more pools)                     | [pool.json](https://raw.githubusercontent.com/lukasniedoba/altcoingenerator/master/configpoolexamples/pools/pool.json)
 coiniumservyescrypt/build/bin/Release/config/coins/elicoin.json         | Coin confuguration file. You must create this file                   | [elicoin.json](https://raw.githubusercontent.com/lukasniedoba/altcoingenerator/master/configpoolexamples/coins/elicoin.json)
+
+
++ Running
+```
+cd coiniumservyescrypt/build/bin
+mono CoiniumServ.exe
