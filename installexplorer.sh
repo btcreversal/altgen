@@ -4,6 +4,10 @@ DBUSER="dbuser"
 DBPASS="dbpass123"
 DBNAME="blockexplorerdatabase"
 
+COIN_NAME="Elicoin"
+COIN_SYMBOL="ELI"
+PAGE_TITLE="Elicoin"
+
 RPCUSER=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1);
 RPCPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1);
 RPCPORT="9999"
@@ -45,8 +49,9 @@ cp ./settings.json.template ./settings.json
 
 sed -i "s|127.0.0.1:3001|127.0.0.1:80|g" settings.json
 sed -i "s|3001|80|g" settings.json
-sed -i "s|Darkcoin|Elicoin|g" settings.json
-sed -i "s|DRK|ELI|g" settings.json
+sed -i "s|Darkcoin|$COIN_NAME|g" settings.json
+sed -i "s|DRK|$COIN_SYMBOL|g" settings.json
+sed -i "s|IQUIDUS|$PAGE_TITLE|g" settings.json
 sed -i "s|1337|0|g" settings.json
 sed -i "s|1733320247b15ca2262be646397d1ffd6be953fa638ebb8f5dcbb4c2b91b34f1|$GENESIS_BLOCK|g" settings.json
 sed -i "s|f270cd3813254c9922a2e222a56ba745842d9112223a1394062e460b33d27b7e|$GENESIS_TX|g" settings.json
