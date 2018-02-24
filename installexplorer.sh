@@ -18,6 +18,7 @@ echo -e rpcuser=$RPCUSER"\n"rpcpassword=$RPCPASS"\n"rpcport=$RPCPORT > /root/.el
 elicoind -daemon
 sleep 10
 
+
 GENESIS_BLOCK=`elicoin-cli getblockhash 0`
 GENESIS_TX=`elicoin-cli getblock \`elicoin-cli getblockhash 0\` | grep merkleroot | cut -d'"' -f4`
 
