@@ -1,15 +1,20 @@
 #!/bin/bash
-GENESIS_BLOCK="26313f37e5c18d9208750be9c54e1732dc2d3c53223d48fee171acfebb07e147"
-GENESIS_TX="fe75686c319672a04500a89326ff7f0236cef69e7cff9965dd7df4aa273f08b7"
-ADDRESS="EbpF6NXRWgXFmFQWqRbqNL3vzudeMqR84c"
 
 DBUSER="dbuser"
-DBPASS="dbpass"
+DBPASS="dbpass123"
 DBNAME="blockexplorerdatabase"
 
-RPCUSER="GERyFX9Fu3IPiE7a"
-RPCPASS="2LMNh4PKq2aVT39NdtwGDIQr9QCC4cJOnCzfVbEthwc3FLn6TSYqhT4jpbRbKMpU"
+RPCUSER=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1);
+RPCPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1);
 RPCPORT="9999"
+
+elcoin-cli stop
+echo "" > /root/.elicoin/elicoin.conf
+echo -e rpcuser=$RPCUSER"\n"rpcpassword=$RPCPASS"\n"rpcport=$RPCPORT > /root/.elicoin/elicoin.conf
+elicoind -daemon
+
+GENESIS_BLOCK=`elicoin-cli getblockhash 0`
+GENESIS_TX=`elicoin-cli getblock \`elicoin-cli getblockhash 0\` | grep merkleroot | cut -d'"' -f4`
 
 apt-get -y install libkrb5-dev
 apt-get -y install build-essential
@@ -63,3 +68,6 @@ db.createUser( { user: "$DBUSER", pwd: "$DBPASS", roles: [ "readWrite" ] } )
 EOF
 
 mongo < database.js
+
+echo "*******************************************************************************************"
+echo "installation is done"
