@@ -76,5 +76,16 @@ EOF
 
 mongo < database.js
 
-echo "*******************************************************************************************"
-echo "installation is done"
+cat >> runexplorer.sh <<EOF
+#!/bin/bash
+export NVM_DIR='root'/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+cd /root/explorer
+nohup npm start &
+EOF
+
+echo "***************************************************************************"
+echo "You can run block explorer with: (or you can place it into your rc.local)"
+echo ">cd explorer"
+echo ">runexplorer.sh"
