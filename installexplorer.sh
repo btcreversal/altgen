@@ -12,7 +12,7 @@ RPCUSER=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1);
 RPCPASS=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1);
 RPCPORT="9999"
 
-elcoin-cli stop
+elicoin-cli stop
 echo "" > /root/.elicoin/elicoin.conf
 echo -e rpcuser=$RPCUSER"\n"rpcpassword=$RPCPASS"\n"rpcport=$RPCPORT > /root/.elicoin/elicoin.conf
 elicoind -daemon
