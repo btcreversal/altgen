@@ -40,8 +40,18 @@ export REGTEST_GENESIS_TIMESTAMP="1516835334"
 
 # Minimum fee .... Amount which you can send can`t be smaller than that [Satoshis]
 export MIN_FEE="0"
-# Recommended fee [Satoshis]
+# Fallback fee [Satoshis]
+# If fee estimation does not have enough data to provide estimates, use this fee instead.
+# Has no effect if not using fee estimation
+# Override with -fallbackfee=<amount>
 export DEFAULT_FALLBACK_FEE="2000000"
+# -maxtxfee default [satoshis]
+# You can use coin contant for coin > satoshis transfer
+export DEFAULT_TRANSACTION_MAXFEE="0.1 * COIN"
+# Discourage users to set fees higher than this amount [satoshis] per kB
+export HIGH_TX_FEE_PER_KB="0.01 * COIN"
+# maxtxfee will warn if called with a higher fee than this amount [in satoshis]
+export HIGH_MAX_TX_FEE="100 * HIGH_TX_FEE_PER_KB"
 
 # Genesis block difficulty
 # Note NBITS is in short difficulty encoding

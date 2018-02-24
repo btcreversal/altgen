@@ -172,12 +172,17 @@ sed -i "s|750000;|$DEFAULT_BLOCK_MAX_SIZE ;|g" src/policy/policy.h
 sed -i "s|3000000;|$DEFAULT_BLOCK_MAX_WEIGHT ;|g" src/policy/policy.h
 
 
-# change nFees
+# change Fees
 sed -i "s|100000;|$MIN_FEE ;|g" src/policy/policy.h
 sed -i "s|1000;|$MIN_FEE ;|g" src/policy/policy.h
 sed -i "s|=[[:space:]]100000;|= $MIN_FEE ;|g" src/validation.h
 sed -i "s|100000;|$MIN_FEE ;|g" src/wallet/wallet.h
 sed -i "s|2000000;|$DEFAULT_FALLBACK_FEE ;|g" src/wallet/wallet.h
+
+sed -i "s|=[[:space:]]0.1[[:space:]]\*[[:space:]]COIN;|= $DEFAULT_TRANSACTION_MAXFEE ;|g" src/validation.h
+sed -i "s|=[[:space:]]0.01[[:space:]]\*[[:space:]]COIN;|= $HIGH_TX_FEE_PER_KB ;|g" src/validation.h
+sed -i "s|=[[:space:]]100[[:space:]]\*[[:space:]]HIGH_TX_FEE_PER_KB;|= $HIGH_MAX_TX_FEE ;|g" src/validation.h
+
 
 # change deploument dates
 # sed -i "s|1517356801|$DEPLOYMENT_CSV_SEGWIT|g" src/chainparams.cpp
