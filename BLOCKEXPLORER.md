@@ -1,6 +1,8 @@
 Block explorer installation
 ====================
 
++ You can use this [script](installexplorer.sh)
+
 # Install dependencies
 
 ```bash
