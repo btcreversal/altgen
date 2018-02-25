@@ -1,7 +1,15 @@
 Mining pool installation
 ====================
 
-# Install mono
+You can use this automatic script
+```bash
+wget https://raw.githubusercontent.com/lukasniedoba/altcoingenerator/master/installpool.sh
+chmod u+x installpool.sh
+./installpool.sh
+# Just press return few times when prompted for redis port etc.
+# Run pool like this or add it to your rc.local file for example: "nohup mono /root/coiniumservyescrypt/build/bin/Release/CoiniumServ.exe &"
+mono /root/coiniumservyescrypt/build/bin/Release/CoiniumServ.exe
+```
 
 
 + [Mono download](http://www.mono-project.com/download/stable/)
