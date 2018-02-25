@@ -8,6 +8,8 @@ RPCUSER="GERyFX9Fu3IPiE7a"
 RPCPASS="2LMNh4PKq2aVT39NdtwGDIQr9QCC4cJOnCzfVbEthwc3FLn6TSYqhT4jpbRbKMpU"
 RPCPORT="9999"
 
+
+# find out what the magic bytes are
 sleep 5
 MAINMAGIC=`head -c 4 ~/.elicoin/blocks/blk00000.dat |hexdump -e '16/1 "%02x" "\n"'`
 elicoin-cli stop
@@ -18,27 +20,51 @@ elicoin-cli stop
 elicoind -daemon
 sleep 5
 
+# install mono framework (needed to build and run C#)
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
 echo "deb http://download.mono-project.com/repo/debian stable-jessie main" | tee /etc/apt/sources.list.d/mono-official-stable.list
 apt-get update
 apt-get -y install mono-devel mono-complete mono-dbg referenceassemblies-pcl mono-xsp4 ca-certificates-mono
 
-debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server-10.0/root_password password $DBPASS'
-debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server-10.0/root_password_again password $DBPASS'
+# install database with pre-set password
+export DEBIAN_FRONTEND="noninteractive"
+debconf-set-selections <<< "mariadb-server mysql-server/root_password password $DBPASS"
+debconf-set-selections <<< "mariadb-server mysql-server/root_password_again password $DBPASS"
 apt-get -y install mariadb-server
 
+# create database initializotion script
 cat >> createdatabase <<EOF
 CREATE DATABASE $DBNAME;
 GRANT ALL PRIVILEGES ON $DBNAME.* TO 'root'@'localhost' WITH GRANT OPTION;
 GRANT ALL ON $DBNAME.* TO 'root'@'localhost' WITH GRANT OPTION;
 EOF
 
-mysql -u root -p $DBPASS < createdatabase
+# initialize database with script
+mysql -u root -p'$DBPASS' < createdatabase
 
+# install redis
+cd ~
+apt-get -y install build-essential
+apt-get -y install tcl8.5
+wget http://download.redis.io/releases/redis-stable.tar.gz
+tar xzf redis-stable.tar.gz
+cd redis-stable
+make
+make install
+cd utils
+./install_server.sh
+service redis_6379 start
+update-rc.d redis_6379 defaults
 
-
-
-
+# build coinium
+cd ~
+apt-get -y install git
+apt-get -y install nuget
+git clone https://niedoluk@bitbucket.org/niedoluk/coiniumservyescrypt.git
+cd coiniumservyescrypt/
+nuget restore
+xbuild CoiniumServ.sln /p:Configuration="Release"
+cp src/CoiniumServ/Algorithms/Implementations/libyescrypt.so build/bin/Release
 
 
 

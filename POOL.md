@@ -63,7 +63,7 @@ xbuild CoiniumServ.sln /p:Configuration="Release"
 cp src/CoiniumServ/Algorithms/Implementations/libyescrypt.so build/bin/Release
 ```
 + [Configure coinium help](https://github.com/bonesoul/CoiniumServ/wiki/Configuration)
-+ Configure coinium filed:
++ Configure coinium files:
 
 Config file                                                             | Description                                                          | Link
 ------------------------------------------------------------------------|----------------------------------------------------------------------|------------------
