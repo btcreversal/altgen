@@ -83,7 +83,7 @@ cd /root/explorer
 nohup /root/.nvm/versions/node/v4.0.0/bin/npm start /root/explorer/package.json &
 EOF
 
-exit
+chmod a+x runexplorer.sh
 
 echo "***************************************************************************"
 echo "You can run block explorer with: (or you can add this line into your rc.local)"
