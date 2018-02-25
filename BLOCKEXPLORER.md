@@ -2,6 +2,11 @@ Block explorer installation
 ====================
 
 + You can use this [script](installexplorer.sh)
+```bash
+wget https://raw.githubusercontent.com/lukasniedoba/altcoingenerator/master/installexplorer.sh
+chmod u+x installexplorer.sh
+./installexplorer.sh
+```
 
 # Install dependencies
 
