@@ -77,45 +77,14 @@ EOF
 mongo < database.js
 
 cat >> runexplorer.sh <<EOF
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-npm start
+#!/bin/bash
+source /root/.bashrc
+cd /root/explorer
+nohup /root/.nvm/versions/node/v4.0.0/bin/npm start /root/explorer/package.json &
 EOF
 
 exit
 
-sudo cat >> /lib/systemd/system/blockexplorer.service <<EOF
-[Unit]
-Description=Elicoin block explorer
-After=network.target local-fs.target
-
-
-[Service]
-Type=simple
-WorkingDirectory=/root/explorer
-ExecStart=/root/explorer/runexplorer.sh
-StandardOutput=syslog
-StandardError=syslog
-SyslogIdentifier=blockexplorer
-Restart=always
-User=root
-
-[Install]
-WantedBy=multi-user.target
-EOF
-sudo systemctl enable blockexplorer.service
-sudo cat >> /etc/rsyslog.d/blockexplorer.conf <<EOF
-if \$programname == 'blockexplorer' then /var/log/blockexplorer.log
-if \$programname == 'blockexplorer' then ~
-EOF
-sudo service rsyslog restart
-
-
-sudo service blockexplorer start
-sudo service blockexplorer status
-
 echo "***************************************************************************"
-echo "You can run block explorer with: (or you can place it into your rc.local)"
-echo ">cd explorer"
-echo ">runexplorer.sh"
+echo "You can run block explorer with: (or you can add this line into your rc.local)"
+echo ">sudo /root/explorer/runexplorer.sh
