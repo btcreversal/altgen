@@ -23,8 +23,8 @@ echo "deb http://download.mono-project.com/repo/debian stable-jessie main" | tee
 apt-get update
 apt-get -y install mono-devel mono-complete mono-dbg referenceassemblies-pcl mono-xsp4 ca-certificates-mono
 
-debconf-set-selections <<< 'mariadb-server mariadb-server/root_password password $DBPASS'
-debconf-set-selections <<< 'mariadb-server mariadb-server/root_password_again password $DBPASS'
+debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server-10.0/root_password password $DBPASS'
+debconf-set-selections <<< 'mariadb-server-10.0 mariadb-server-10.0/root_password_again password $DBPASS'
 apt-get -y install mariadb-server
 
 cat >> createdatabase <<EOF
