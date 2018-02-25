@@ -8,6 +8,7 @@ RPCUSER="GERyFX9Fu3IPiE7a"
 RPCPASS="2LMNh4PKq2aVT39NdtwGDIQr9QCC4cJOnCzfVbEthwc3FLn6TSYqhT4jpbRbKMpU"
 RPCPORT="9999"
 
+sleep 5
 MAINMAGIC=`head -c 4 ~/.elicoin/blocks/blk00000.dat |hexdump -e '16/1 "%02x" "\n"'`
 elicoin-cli stop
 elicoind -daemon -testnet
@@ -22,8 +23,8 @@ echo "deb http://download.mono-project.com/repo/debian stable-jessie main" | tee
 apt-get update
 apt-get -y install mono-devel mono-complete mono-dbg referenceassemblies-pcl mono-xsp4 ca-certificates-mono
 
-sudo debconf-set-selections <<< 'mariadb-server mariadb-server/root_password password $DBPASS'
-sudo debconf-set-selections <<< 'mariadb-server mariadb-server/root_password_again password $DBPASS'
+debconf-set-selections <<< 'mariadb-server mariadb-server/root_password password $DBPASS'
+debconf-set-selections <<< 'mariadb-server mariadb-server/root_password_again password $DBPASS'
 apt-get -y install mariadb-server
 
 cat >> createdatabase <<EOF
