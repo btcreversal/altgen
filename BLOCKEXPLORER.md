@@ -6,6 +6,8 @@ Block explorer installation
 wget https://raw.githubusercontent.com/lukasniedoba/altcoingenerator/master/installexplorer.sh
 chmod u+x installexplorer.sh
 ./installexplorer.sh
+# Then run like this or add this line to your rc.local file
+sudo /root/explorer/runexplorer.sh
 ```
 
 # Install dependencies
