@@ -20,19 +20,21 @@ export FROM_YEAR="2017"
 export TO_YEAR="2018"
 export COIN_DOMAIN="elicoin.net"
 
-export COIN_NAME="Mycoin"
-export COIN_UNIT="MYC"
+export COIN_NAME="Elicoin"
+export COIN_UNIT="ELI"
 # Link to the version used in the script
 export RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
-# Newspaper title of the day
-export PHRASE="Bloomberg 24/Jan/2018 UBSChairmanSaysaMassiveBitcoinCorrectionIsPossible"
-export MAINNET_PORT="9133"
-export TESTNET_PORT="19135"
+# It’s traditional to pick a newspaper headline for the day of launch, but you don’t have to.
+# Whatever you use, keep it short. If it’s OVER 90 CHARACTERS or so the block will FAIL a length
+# check that’s supposed to prevent denial-of-service attacks from people attaching big data to transactions.
+export PHRASE="Cointelegraph 25/Feb/2018 WithoutMentioningBlockchainPutinSaysThatRussiaMustStayAhead"
+export MAINNET_PORT="2059"
+export TESTNET_PORT="20595"
 # https://www.epochconverter.com/
 # Should be gradual (first mainnet, then testnet, then regtest)
-export MAINNET_GENESIS_TIMESTAMP="1516814255"
-export TEST_GENESIS_TIMESTAMP="1516831393"
-export REGTEST_GENESIS_TIMESTAMP="1516835334"
+export MAINNET_GENESIS_TIMESTAMP="1519589181"
+export TEST_GENESIS_TIMESTAMP="1519589182"
+export REGTEST_GENESIS_TIMESTAMP="1519589183"
 
 # Deployment time deadline of BIP68, BIP112, and BIP113 and SegWit (BIP141, BIP143, and BIP147)
 # Is set ot MAINNET_GENESIS_TIMESTAMP + 34 days
@@ -44,14 +46,14 @@ export MIN_FEE="0"
 # If fee estimation does not have enough data to provide estimates, use this fee instead.
 # Has no effect if not using fee estimation
 # Override with -fallbackfee=<amount>
-export DEFAULT_FALLBACK_FEE="2000000"
+export DEFAULT_FALLBACK_FEE="0"
 # -maxtxfee default [satoshis]
 # You can use coin contant for coin > satoshis transfer
-export DEFAULT_TRANSACTION_MAXFEE="0.1 * COIN"
+export DEFAULT_TRANSACTION_MAXFEE="100 * COIN"
 # Discourage users to set fees higher than this amount [satoshis] per kB
-export HIGH_TX_FEE_PER_KB="0.01 * COIN"
+export HIGH_TX_FEE_PER_KB="10 * COIN"
 # maxtxfee will warn if called with a higher fee than this amount [in satoshis]
-export HIGH_MAX_TX_FEE="100 * HIGH_TX_FEE_PER_KB"
+export HIGH_MAX_TX_FEE="10 * HIGH_TX_FEE_PER_KB"
 
 # Genesis block difficulty
 # Note NBITS is in short difficulty encoding
@@ -70,13 +72,13 @@ export NBITS="0x20000fff"
 export MIN_DIFF="000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
 # Block time
 # "minutes * 60"
-export POW_TARGET_SPACING="2.5 * 60"
+export POW_TARGET_SPACING="1 * 60"
 # Genesis reward
 # must be exactly this format "x * COIN"
 export GENESIS_REWARD="10 * COIN"
 
 # https://en.bitcoin.it/wiki/Controlled_supply
-export HALVING_INTERVAL="840000"
+export HALVING_INTERVAL="500000"
 
 # Maximal amount. Coin core use it just for check
 # MAX_MONEY
@@ -89,7 +91,7 @@ export HALVING_INTERVAL="840000"
 # for the creation of coins out of thin air modification could lead to a fork.
 #
 # Recommended to set as half of the whole coin supply
-export MAX_MONEY="42000000"
+export MAX_MONEY="5000000"
 
 # How much blocks before coinbase (mined) transaction could be spent
 export COINBASE_MATURITY="100"
@@ -107,15 +109,15 @@ export TEST_ESTIMATED_TRANSACTIONS="0.001"
 # http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  search for  'The Key Prefixes'
 # https://en.bitcoin.it/wiki/List_of_address_prefixes  Table of values
 # base58Prefixes[PUBKEY_ADDRESS], base58Prefixes[SCRIPT_ADDRESS], base58Prefixes[SCRIPT_ADDRESS2], base58Prefixes[SECRET_KEY]
-export base58Prefixes_PUBKEY_ADDRESS_MAIN="48"
-export base58Prefixes_SCRIPT_ADDRESS_MAIN="5"
-export base58Prefixes_SCRIPT_ADDRESS2_MAIN="50"
-export base58Prefixes_SECRET_KEY_MAIN="176"
+export base58Prefixes_PUBKEY_ADDRESS_MAIN="33"
+export base58Prefixes_SCRIPT_ADDRESS_MAIN="102"
+export base58Prefixes_SCRIPT_ADDRESS2_MAIN="92"
+export base58Prefixes_SECRET_KEY_MAIN="205"
 
-export base58Prefixes_PUBKEY_ADDRESS_TEST="111"
-export base58Prefixes_SCRIPT_ADDRESS_TEST="196"
-export base58Prefixes_SCRIPT_ADDRESS2_TEST="58"
-export base58Prefixes_SECRET_KEY_TEST="239"
+export base58Prefixes_PUBKEY_ADDRESS_TEST="65"
+export base58Prefixes_SCRIPT_ADDRESS_TEST="105"
+export base58Prefixes_SCRIPT_ADDRESS2_TEST="127"
+export base58Prefixes_SECRET_KEY_TEST="206"
 
 
 
@@ -147,7 +149,7 @@ export base58Prefixes_SECRET_KEY_TEST="239"
 # 0x0488ADE4,     0x0488B21E     # MZC  Mazacoin   mainnet : xprv / xpub
 
 export PUBLIC_PREFIX_MAIN="ecpb"
-export PRIVATE_PREFIX_MAIN="ecrv"
-export PUBLIC_PREFIX_TEST="tepb"
-export PRIVATE_PREFIX_TEST="terv"
+export PRIVATE_PREFIX_MAIN="ecpv"
+export PUBLIC_PREFIX_TEST="etpb"
+export PRIVATE_PREFIX_TEST="etpv"
 # **************************************************************************************************
