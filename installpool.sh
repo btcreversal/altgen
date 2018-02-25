@@ -47,8 +47,8 @@ apt-get -y install mariadb-server
 # create database initializotion script
 cat >> createdatabase <<EOF
 CREATE DATABASE $DBNAME;
-GRANT ALL PRIVILEGES ON $DBNAME.* TO 'root'@'localhost' IDENTIFIED BY '$DBPASS' WITH GRANT OPTION;
-GRANT ALL ON $DBNAME.* TO 'root'@'localhost' IDENTIFIED BY '$DBPASS' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON $DBNAME.* TO 'root'@'localhost' WITH GRANT OPTION;
+GRANT ALL ON $DBNAME.* TO 'root'@'localhost' WITH GRANT OPTION;
 EOF
 
 # initialize database with script
