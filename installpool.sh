@@ -3,7 +3,7 @@
 # change this to your coin reward address (where percentual mined reward goes)
 REWARDADDRESS="EYt8EWNW8ZbYujtVHdExKAFtowtqokohFi"
 
-DBUSER="root"
+# you can edit following db password
 DBPASS="dbpass"
 DBNAME="coiniumdb"
 
@@ -52,7 +52,7 @@ GRANT ALL ON $DBNAME.* TO 'root'@'localhost' WITH GRANT OPTION;
 EOF
 
 # initialize database with script
-mysql -u root -p'$DBPASS' < createdatabase
+mysql -u root --password=$DBPASS < createdatabase
 
 # install redis
 cd ~
@@ -84,6 +84,7 @@ cp src/CoiniumServ/Algorithms/Implementations/libyescrypt.so build/bin/Release
 
 
 
+DBUSER="root"
 sed -i "s|fbc0b6db|$MAINMAGIC|g" build/bin/Release/config/coins/elicoin.json
 sed -i "s|fcc1b7dc|$TESTMAGIC|g" build/bin/Release/config/coins/elicoin.json
 
