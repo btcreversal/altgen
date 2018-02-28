@@ -1,4 +1,4 @@
-sudo cat >> /lib/systemd/system/pool.service <<EOF
+cat >> /lib/systemd/system/pool.service <<EOF
 [Unit]
 Description=CoiniumServ pool service
 After=network.target local-fs.target
@@ -14,3 +14,9 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOF
+
+systemctl enable pool.service
+
+# service pool start
+# service pool status
+# service pool restart
