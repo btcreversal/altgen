@@ -8,7 +8,7 @@ After=network.target local-fs.target postgresql.service
 Type=simple
 User=root
 WorkingDirectory=/root/coiniumservyescrypt/build/bin/Release/
-ExecStart=mono /root/coiniumservyescrypt/build/bin/Release/CoiniumServ.exe
+ExecStart=/usr/bin/mono /root/coiniumservyescrypt/build/bin/Release/CoiniumServ.exe
 Restart=always
 
 [Install]
