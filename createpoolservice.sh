@@ -1,7 +1,7 @@
 sudo cat >> /lib/systemd/system/pool.service <<EOF
 [Unit]
 Description=CoiniumServ pool service
-After=network.target local-fs.target postgresql.service
+After=network.target local-fs.target
 
 
 [Service]
