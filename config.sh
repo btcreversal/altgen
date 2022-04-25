@@ -23,7 +23,7 @@ export COIN_DOMAIN="safeminecoin.xyz"
 export COIN_NAME="SafeMineX"
 export COIN_UNIT="SMX"
 # Link to the version used in the script
-export RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/refs/tags/v0.18.1.tar.gz"
+export RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/refs/tags/v0.14.2.tar.gz"
 # It’s traditional to pick a newspaper headline for the day of launch, but you don’t have to.
 # Whatever you use, keep it short. If it’s OVER 90 CHARACTERS or so the block will FAIL a length
 # check that’s supposed to prevent denial-of-service attacks from people attaching big data to transactions.
