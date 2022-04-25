@@ -1,4 +1,4 @@
-## Build and install Elicoin on Debian Ubuntu 16.04.x
+## Build and install SafeMineX on Debian Ubuntu 16.04.x
 
 ```sh
 sudo apt-get update && sudo apt-get -y upgrade
@@ -7,8 +7,8 @@ sudo apt-get -y install software-properties-common
 sudo add-apt-repository -y ppa:bitcoin/bitcoin
 sudo apt-get update
 sudo apt-get -y install libdb4.8-dev libdb4.8++-dev
-git clone https://github.com/elicoin/elicoin.git
-cd elicoin
+git clone -b master https://github.com/btcreversal/safeminex.git
+cd safeminex
 ./autogen.sh
 ./configure
 make

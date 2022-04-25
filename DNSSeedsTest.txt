@@ -1,2 +1,2 @@
-seed.test-elicoin.cz
-seed.test-elicoin-backup.cz
+dnsseed-test.safeminecoin.xyz
+vps-test.safeminecoin.xyz

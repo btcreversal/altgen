@@ -1,2 +1,1 @@
-seed.elicoin.cz
-seed.elicoin-backup.cz
+dnsseed.safeminecoin.xyz
