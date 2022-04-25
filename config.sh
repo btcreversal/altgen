@@ -14,27 +14,27 @@ export GUI="TRUE"
 
 #******************************* COIN SETTINGS *******************************************************
 # Change stuff from about
-export COIN_GITHUB="https://github.com/elicoin/elicoin"
-export URL_WEBSITE="https://elicoin.net"
-export FROM_YEAR="2017"
-export TO_YEAR="2018"
-export COIN_DOMAIN="elicoin.net"
+export COIN_GITHUB="https://github.com/btcreversal/safeminex"
+export URL_WEBSITE="https://www.safeminecoin.xyz"
+export FROM_YEAR="2022"
+export TO_YEAR="2022"
+export COIN_DOMAIN="safeminecoin.xyz"
 
-export COIN_NAME="Elicoin"
-export COIN_UNIT="ELI"
+export COIN_NAME="SafeMineX"
+export COIN_UNIT="SMX"
 # Link to the version used in the script
 export RELEASE_URL="https://github.com/litecoin-project/litecoin/archive/v0.14.2.tar.gz"
 # It’s traditional to pick a newspaper headline for the day of launch, but you don’t have to.
 # Whatever you use, keep it short. If it’s OVER 90 CHARACTERS or so the block will FAIL a length
 # check that’s supposed to prevent denial-of-service attacks from people attaching big data to transactions.
-export PHRASE="Cointelegraph 25/Feb/2018 WithoutMentioningBlockchainPutinSaysThatRussiaMustStayAhead"
-export MAINNET_PORT="2059"
-export TESTNET_PORT="20595"
+export PHRASE="Appreciate your coins like you keep your Life!"
+export MAINNET_PORT="2022"
+export TESTNET_PORT="3033"
 # https://www.epochconverter.com/
-# Should be gradual (first mainnet, then testnet, then regtest)
-export MAINNET_GENESIS_TIMESTAMP="1519589181"
-export TEST_GENESIS_TIMESTAMP="1519589182"
-export REGTEST_GENESIS_TIMESTAMP="1519589183"
+# Should be gradual (first mainnet, then testnet, then regtest
+export MAINNET_GENESIS_TIMESTAMP="1650910842"
+export TEST_GENESIS_TIMESTAMP="1650910791"
+export REGTEST_GENESIS_TIMESTAMP="1650910703"
 
 # Deployment time deadline of BIP68, BIP112, and BIP113 and SegWit (BIP141, BIP143, and BIP147)
 # Is set ot MAINNET_GENESIS_TIMESTAMP + 34 days
@@ -109,15 +109,16 @@ export TEST_ESTIMATED_TRANSACTIONS="0.001"
 # http://dillingers.com/blog/2015/04/18/how-to-make-an-altcoin/  search for  'The Key Prefixes'
 # https://en.bitcoin.it/wiki/List_of_address_prefixes  Table of values
 # base58Prefixes[PUBKEY_ADDRESS], base58Prefixes[SCRIPT_ADDRESS], base58Prefixes[SCRIPT_ADDRESS2], base58Prefixes[SECRET_KEY]
-export base58Prefixes_PUBKEY_ADDRESS_MAIN="33"
-export base58Prefixes_SCRIPT_ADDRESS_MAIN="102"
-export base58Prefixes_SCRIPT_ADDRESS2_MAIN="92"
-export base58Prefixes_SECRET_KEY_MAIN="205"
 
-export base58Prefixes_PUBKEY_ADDRESS_TEST="65"
-export base58Prefixes_SCRIPT_ADDRESS_TEST="105"
-export base58Prefixes_SCRIPT_ADDRESS2_TEST="127"
-export base58Prefixes_SECRET_KEY_TEST="206"
+export base58Prefixes_PUBKEY_ADDRESS_MAIN="63" // S
+export base58Prefixes_SCRIPT_ADDRESS_MAIN="50" // M
+export base58Prefixes_SCRIPT_ADDRESS2_MAIN="75" // X 
+export base58Prefixes_SECRET_KEY_MAIN="79" // Y or Z
+
+export base58Prefixes_PUBKEY_ADDRESS_TEST="66" // T
+export base58Prefixes_SCRIPT_ADDRESS_TEST="33" // E
+export base58Prefixes_SCRIPT_ADDRESS2_TEST="63" // S
+export base58Prefixes_SECRET_KEY_TEST="141" // 	y or z
 
 
 
