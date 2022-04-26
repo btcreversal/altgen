@@ -23,7 +23,7 @@ export COIN_DOMAIN="safeminecoin.xyz"
 export COIN_NAME="SafeMineX"
 export COIN_UNIT="SMX"
 # Link to the version used in the script
-export RELEASE_URL="https://github.com/ReacoinOfficial/reacoin/archive/refs/tags/v1.1.0.tar.gz"
+export RELEASE_URL="https://github.com/bitcoin/bitcoin/archive/refs/tags/v23.0.tar.gz"
 # It’s traditional to pick a newspaper headline for the day of launch, but you don’t have to.
 # Whatever you use, keep it short. If it’s OVER 90 CHARACTERS or so the block will FAIL a length
 # check that’s supposed to prevent denial-of-service attacks from people attaching big data to transactions.
@@ -75,10 +75,10 @@ export MIN_DIFF="000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 export POW_TARGET_SPACING="1 * 60"
 # Genesis reward
 # must be exactly this format "x * COIN"
-export GENESIS_REWARD="10 * COIN"
+export GENESIS_REWARD="50 * COIN"
 
 # https://en.bitcoin.it/wiki/Controlled_supply
-export HALVING_INTERVAL="500000"
+export HALVING_INTERVAL="210000"
 
 # Maximal amount. Coin core use it just for check
 # MAX_MONEY
@@ -91,7 +91,7 @@ export HALVING_INTERVAL="500000"
 # for the creation of coins out of thin air modification could lead to a fork.
 #
 # Recommended to set as half of the whole coin supply
-export MAX_MONEY="5000000"
+export MAX_MONEY="21000000"
 
 # How much blocks before coinbase (mined) transaction could be spent
 export COINBASE_MATURITY="100"
