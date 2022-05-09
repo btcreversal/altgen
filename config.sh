@@ -14,7 +14,7 @@ export GUI="TRUE"
 
 #******************************* COIN SETTINGS *******************************************************
 # Change stuff from about
-export COIN_GITHUB="https://github.com/btcreversal/safeminex"
+export COIN_GITHUB="https://github.com/safeminecoin/safeminex"
 export URL_WEBSITE="https://www.safeminecoin.xyz"
 export FROM_YEAR="2022"
 export TO_YEAR="2022"
@@ -28,8 +28,8 @@ export RELEASE_URL="https://github.com/bitcoin/bitcoin/archive/refs/tags/v23.0.t
 # Whatever you use, keep it short. If it’s OVER 90 CHARACTERS or so the block will FAIL a length
 # check that’s supposed to prevent denial-of-service attacks from people attaching big data to transactions.
 export PHRASE="Appreciate your coins like you keep your Life!"
-export MAINNET_PORT="2022"
-export TESTNET_PORT="3033"
+export MAINNET_PORT="42022"
+export TESTNET_PORT="43033"
 # https://www.epochconverter.com/
 # Should be gradual (first mainnet, then testnet, then regtest
 export MAINNET_GENESIS_TIMESTAMP="1650910842"
