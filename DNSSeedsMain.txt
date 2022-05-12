@@ -1,3 +1,4 @@
+addnode=dnsseed.safeminecoin.xyz
 addnode=192.99.252.243
 addnode=135.125.225.55
 addnode=51.195.249.132
